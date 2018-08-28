@@ -1,0 +1,176 @@
+			#cardWrapper{
+				width:325px;
+				height:500px;
+				padding: 10px;
+				border: 5px;
+			}
+			#name{
+				display: inline;
+			}
+			
+			#mana_cost{
+				display: inline;
+				float: right;
+				margin: 0px;
+			}
+			
+			#cardImageBox{
+				padding-top: 10px;
+				padding-bottom:10px;
+				width:300px;
+				height:200px;
+				float:center;
+			}
+			
+			#cardImage{
+				max-width: 100%;
+				height: auto;
+			}
+			
+			#flavor_text{
+				font-style: italic;
+			}
+			
+			#artist{
+				display: inline;
+				font-style: italic;
+			}
+			
+			#pt{
+				float: right;
+				display: inline;
+				margin: 0px;
+			}
+			
+			#scryfallLinkBox{
+				text-align:center;
+			}
+			
+			
+			.autocomplete{
+				position:relative;
+				display: inline-block;
+			}
+			
+			.autocomplete-items{
+				position:absolute;
+				border:1px solid black;
+				border-bottom:none;
+				border-top:none;
+				z-index:99;
+				top:100%;
+				left:0;
+				right:0;
+			}
+			
+			.autocomplete-items div{
+				padding:10px;
+				cursor:pointer;
+				border-bottom: 1px solid black;
+				background-color:white;
+			}
+			
+			.autocomplete-items div:hover{
+				background-color: #e9e9e9 !important;
+			}
+			
+			.autocomplete-active{
+				background-color: #e9e9e9 !important;
+				color: black;
+			}
+			
+			.tapSymbol{
+				background-image:url("symbols/T.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.whiteMana{
+				background-image:url("symbols/W.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.blueMana{
+				background-image:url("symbols/U.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.blackMana{
+				background-image:url("symbols/B.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			.redMana{
+				background-image:url("symbols/R.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.greenMana{
+				background-image:url("symbols/G.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.colourlessMana{
+				background-image:url("symbols/C.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+						
+			.oneMana{
+				background-image:url("symbols/1.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+				
+			}
+			
+			.twoMana{
+				background-image:url("symbols/2.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.threeMana{
+				background-image:url("symbols/3.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.fourMana{
+				background-image:url("symbols/4.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.xMana{
+				background-image:url("symbols/X.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}

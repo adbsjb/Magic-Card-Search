@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<title>MTG Search</title>
+	</head>
+	<body>
+		<form autocomplete="off">
+			<div class="autocomplete">
+				<input id="myInput" type="search" value="">
+			</div>
+			<input id="checkImage" type="checkbox">Image
+			<button id="button" type="button" onclick="loadDoc()" style="margin-left: 50px;">Request Data</button>
+		</form>
+		
+		<div id="cardWrapper">
+		<p id="name"></p>
+		<p id="mana_cost"></p>
+		<div id="cardImageBox">
+			<img id="cardImage"></img>
+		</div>
+		<p id="type_line"></p>
+		<p id="oracle_text"></p>
+		<p id="flavor_text"></p>
+		<p id="artist"></p>
+		<p id="pt"></p>
+		<div id="scryfallLinkBox">
+			<a id="scryfall_Link" target="_blank"></a>
+		</div>
+		</div>
+		
+		<script src="script.js"></script>
+		
+	</body>
+</html>
