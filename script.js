@@ -1,22 +1,6 @@
-	
-function loadJSONFromFile(callback){
-	var xobj = new XMLHttpRequest();
-	xobj.overrideMimeType("application/json");
-	xobj.open('GET', 'cards.json', true);
-	xobj.onreadystatechange = function (){
-		if(xobj.readyState == 4 && xobj.status == "200"){
-			callback(xobj.responseText);
-		}			
-	};
-	xobj.send(null);
-}
-
 var cardsArray;
 var cardObjects;
-
-loadJSONFromFile(function(response){				
-	autocomplete(document.getElementById("myInput"));
-});
+autocompleteSetup(document.getElementById("myInput"));
 
 
 function replaceSymbols(newString){
@@ -36,7 +20,9 @@ function replaceSymbols(newString){
 	return newString;
 }
 
-
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function loadDoc(){	
 	var xhttp = new XMLHttpRequest();
@@ -121,13 +107,14 @@ userInput.addEventListener("keyup", function(event) {
 		document.getElementById("button").click();
 	}
 });		
-		
-			
-			
-function autocomplete(input){
+	
+
+var autocompleteCurrentlyRunning = false;
+async function autocompleteSetup(input){
 
 	var currentFocus;
-	input.addEventListener("input", function(e){
+	input.addEventListener("input", async function (e){
+		
 		var inputBox = this;
 		var a, b, i, count, input = inputBox.value;
 		
@@ -139,7 +126,11 @@ function autocomplete(input){
 		currentFocus = -1;
 		count = 0;
 		
-		if(input.length > 2){	
+		if(input.length > 2 ){
+			if(autocompleteCurrentlyRunning == true){
+				await sleep(1000);
+			}
+			autocompleteCurrentlyRunning = true;
 			var xhttp = new XMLHttpRequest();
 			if(input != ""){		
 				xhttp.open("GET", "https://api.scryfall.com/cards/autocomplete?q=" + input, true);
@@ -157,25 +148,25 @@ function autocomplete(input){
 					
 					for (i = 0; i < array.data.length; i++){
 						
-						//if((array.data[i].substr(0, input.length).toUpperCase() == input.toUpperCase()) && count < 20){
-						
-							b = document.createElement("DIV");
-							b.innerHTML = "<strong>" + array.data[i].substr(0, input.length) + "</strong>";
-							b.innerHTML += array.data[i].substr(input.length);
-							b.innerHTML += "<input type='hidden' value='" + array.data[i] + "'>";
-							b.addEventListener("click", function(e) {
-								input.value = this.getElementsByTagName("input")[0].value;					//look at this. work out where to get autocompleted text from within the correct div
-								closeAllLists();
-							});
-							a.appendChild(b);
-							count++;
-						//}				
+						b = document.createElement("DIV");
+						b.innerHTML = "<strong>" + array.data[i].substr(0, input.length) + "</strong>";
+						b.innerHTML += array.data[i].substr(input.length);
+						b.innerHTML += "<input type='hidden' value='" + array.data[i] + "'>";
+						b.addEventListener("click", function(e) {
+							inputBox.value = this.getElementsByTagName("input")[0].value;
+							closeAllLists();
+						});
+						a.appendChild(b);
+						count++;
 					}
 					
 
 				}
 			}
+			
+			autocompleteCurrentlyRunning = false;
 		}
+		
 	});
 
 
