@@ -15,8 +15,7 @@ var cardsArray;
 var cardObjects;
 
 loadJSONFromFile(function(response){				
-	cardObjects = JSON.parse(response);			
-	autocomplete(document.getElementById("myInput"), cardObjects);
+	autocomplete(document.getElementById("myInput"));
 });
 
 
@@ -36,6 +35,7 @@ function replaceSymbols(newString){
 	newString = newString.replace(/\n/g, '<br>');
 	return newString;
 }
+
 
 
 function loadDoc(){	
@@ -124,41 +124,58 @@ userInput.addEventListener("keyup", function(event) {
 		
 			
 			
-function autocomplete(input, array){
+function autocomplete(input){
 
 	var currentFocus;
 	input.addEventListener("input", function(e){
-		var a, b, i, count, val = this.value;
+		var inputBox = this;
+		var a, b, i, count, input = inputBox.value;
 		
 		closeAllLists();
-		if(!val){
+		if(!input){
 			return false;
 		}
 		
 		currentFocus = -1;
 		count = 0;
 		
-		a = document.createElement("DIV");
-		a.setAttribute("id", this.id + "autocomplete-list");
-		a.setAttribute("class", "autocomplete-items");
-		this.parentNode.appendChild(a);
-		
-		for (i = 0; i < array.length; i++){
+		if(input.length > 2){	
+			var xhttp = new XMLHttpRequest();
+			if(input != ""){		
+				xhttp.open("GET", "https://api.scryfall.com/cards/autocomplete?q=" + input, true);
+				xhttp.send();
+			}
 			
-			if((array[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) && count < 20){
-			
-				b = document.createElement("DIV");
-				b.innerHTML = "<strong>" + array[i].name.substr(0, val.length) + "</strong>";
-				b.innerHTML += array[i].name.substr(val.length);
-				b.innerHTML += "<input type='hidden' value='" + array[i].name + "'>";
-				b.addEventListener("click", function(e) {
-					input.value = this.getElementsByTagName("input")[0].value;
-					closeAllLists();
-				});
-				a.appendChild(b);
-				count++;
-			}				
-		}			
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var array = JSON.parse(this.responseText);
+					
+					a = document.createElement("DIV");
+					a.setAttribute("id", inputBox.id + "autocomplete-list");
+					a.setAttribute("class", "autocomplete-items");
+					inputBox.parentNode.appendChild(a);
+					
+					for (i = 0; i < array.data.length; i++){
+						
+						//if((array.data[i].substr(0, input.length).toUpperCase() == input.toUpperCase()) && count < 20){
+						
+							b = document.createElement("DIV");
+							b.innerHTML = "<strong>" + array.data[i].substr(0, input.length) + "</strong>";
+							b.innerHTML += array.data[i].substr(input.length);
+							b.innerHTML += "<input type='hidden' value='" + array.data[i] + "'>";
+							b.addEventListener("click", function(e) {
+								input.value = this.getElementsByTagName("input")[0].value;					//look at this. work out where to get autocompleted text from within the correct div
+								closeAllLists();
+							});
+							a.appendChild(b);
+							count++;
+						//}				
+					}
+					
+
+				}
+			}
+		}
 	});
 
 
