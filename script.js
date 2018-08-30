@@ -116,7 +116,7 @@ async function autocompleteSetup(input){
 	input.addEventListener("input", async function (e){
 		
 		var inputBox = this;
-		var a, b, i, count, input = inputBox.value;
+		var a, b, i, input = inputBox.value;
 		
 		closeAllLists();
 		if(!input){
@@ -149,15 +149,16 @@ async function autocompleteSetup(input){
 					for (i = 0; i < array.data.length; i++){
 						
 						b = document.createElement("DIV");
-						b.innerHTML = "<strong>" + array.data[i].substr(0, input.length) + "</strong>";
-						b.innerHTML += array.data[i].substr(input.length);
+						var searchInString = array.data[i].search(input);
+						//b.innerHTML = "<strong>" + array.data[i].substr(input, input.length) + "</strong>";
+						b.innerHTML = array.data[i];
+						b.innerHTML = b.innerHTML.replace(input, "<strong>" + input + "</strong>")
 						b.innerHTML += "<input type='hidden' value='" + array.data[i] + "'>";
 						b.addEventListener("click", function(e) {
 							inputBox.value = this.getElementsByTagName("input")[0].value;
 							closeAllLists();
 						});
 						a.appendChild(b);
-						count++;
 					}
 					
 
