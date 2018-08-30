@@ -108,12 +108,11 @@ userInput.addEventListener("keyup", function(event) {
 	}
 });		
 	
-
-var autocompleteCurrentlyRunning = false;
-async function autocompleteSetup(input){
+var divs = [];
+function autocompleteSetup(input){
 
 	var currentFocus;
-	input.addEventListener("input", async function (e){
+	input.addEventListener("input", function (e){
 		
 		var inputBox = this;
 		var a, b, i, input = inputBox.value;
@@ -127,10 +126,7 @@ async function autocompleteSetup(input){
 		count = 0;
 		
 		if(input.length > 2 ){
-			if(autocompleteCurrentlyRunning == true){
-				await sleep(1000);
-			}
-			autocompleteCurrentlyRunning = true;
+			
 			var xhttp = new XMLHttpRequest();
 			if(input != ""){		
 				xhttp.open("GET", "https://api.scryfall.com/cards/autocomplete?q=" + input, true);
@@ -144,15 +140,24 @@ async function autocompleteSetup(input){
 					a = document.createElement("DIV");
 					a.setAttribute("id", inputBox.id + "autocomplete-list");
 					a.setAttribute("class", "autocomplete-items");
+					a.classList.add(Date.now());
 					inputBox.parentNode.appendChild(a);
+					
+					if(divs.push(a.classList[1]) > 1){
+						for(var i = 0; i < divs.length - 1; i++){
+							var currentDiv = document.getElementsByClassName(divs[i])[0];						//only sometimes works for some reason
+							currentDiv.innerHTML = "";
+						}
+						divs.shift();
+					}
 					
 					for (i = 0; i < array.data.length; i++){
 						
 						b = document.createElement("DIV");
-						var searchInString = array.data[i].search(input);
-						//b.innerHTML = "<strong>" + array.data[i].substr(input, input.length) + "</strong>";
+						var searchInString = array.data[i].toUpperCase().search(input.toUpperCase());
+						var caseCorrectInput = array.data[i].substr(searchInString, input.length);
 						b.innerHTML = array.data[i];
-						b.innerHTML = b.innerHTML.replace(input, "<strong>" + input + "</strong>")
+						b.innerHTML = b.innerHTML.replace(caseCorrectInput, "<strong>" + caseCorrectInput + "</strong>")
 						b.innerHTML += "<input type='hidden' value='" + array.data[i] + "'>";
 						b.addEventListener("click", function(e) {
 							inputBox.value = this.getElementsByTagName("input")[0].value;
@@ -165,7 +170,6 @@ async function autocompleteSetup(input){
 				}
 			}
 			
-			autocompleteCurrentlyRunning = false;
 		}
 		
 	});
