@@ -10,11 +10,11 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{R}/g, '<span class="redMana"></span>');
 	newString = newString.replace(/{G}/g, '<span class="greenMana"></span>');
 	newString = newString.replace(/{C}/g, '<span class="colourlessMana"></span>');
-	newString = newString.replace('{1}', '<span class="oneMana"></span>');
+	newString = newString.replace(/{1}/g, '<span class="oneMana"></span>');
 	newString = newString.replace('{2}', '<span class="twoMana"></span>');
 	newString = newString.replace('{3}', '<span class="threeMana"></span>');
-	newString = newString.replace('{4}', '<span class="fourMana"></span>');
-	newString = newString.replace('{X}', '<span class="xMana"></span>');
+	newString = newString.replace(/{4}/g, '<span class="fourMana"></span>');
+	newString = newString.replace(/{X}/g, '<span class="xMana"></span>');
 	newString = newString.replace(/{T}/g, '<span class="tapSymbol"></span>');
 	newString = newString.replace(/\n/g, '<br>');
 	return newString;
@@ -109,6 +109,7 @@ userInput.addEventListener("keyup", function(event) {
 });		
 	
 var divs = [];
+var index = 0;
 function autocompleteSetup(input){
 
 	var currentFocus;
@@ -140,15 +141,19 @@ function autocompleteSetup(input){
 					a = document.createElement("DIV");
 					a.setAttribute("id", inputBox.id + "autocomplete-list");
 					a.setAttribute("class", "autocomplete-items");
-					a.classList.add(Date.now());
+					a.classList.add(index);
+					divs.push(a.classList[1]);
+					index++;
 					inputBox.parentNode.appendChild(a);
 					
-					if(divs.push(a.classList[1]) > 1){
+					
+					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
-							var currentDiv = document.getElementsByClassName(divs[i])[0];						//only sometimes works for some reason
+							var currentDiv = document.getElementsByClassName(divs[i])[0];						//i think this works now but keep an eye on it
 							currentDiv.innerHTML = "";
+							divs.shift();
 						}
-						divs.shift();
+						
 					}
 					
 					for (i = 0; i < array.data.length; i++){
@@ -215,7 +220,7 @@ function autocompleteSetup(input){
 			currentFocus = (x.length -1);
 		}
 		
-		x[currentFocus].classList.add("autocomplete-active");
+		x[currentFocus].classList.add("autocomplete-active");							//chrome is complaining that x [currentfocus] isnt defifined sometimes. v confused
 	}
 
 	function removeActive(x){
@@ -226,6 +231,7 @@ function autocompleteSetup(input){
 
 	function closeAllLists(elmnt){
 
+		divs = [];
 		var x = document.getElementsByClassName("autocomplete-items");
 		for(var i = 0; i < x.length; i++){
 		
