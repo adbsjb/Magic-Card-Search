@@ -10,10 +10,10 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{R}/g, '<span class="redMana"></span>');
 	newString = newString.replace(/{G}/g, '<span class="greenMana"></span>');
 	newString = newString.replace(/{C}/g, '<span class="colourlessMana"></span>');
-	newString = newString.replace(/{1}/g, '<span class="oneMana"></span>');
+	newString = newString.replace('{1}', '<span class="oneMana"></span>');
 	newString = newString.replace('{2}', '<span class="twoMana"></span>');
 	newString = newString.replace('{3}', '<span class="threeMana"></span>');
-	newString = newString.replace(/{4}/g, '<span class="fourMana"></span>');
+	newString = newString.replace('{4}', '<span class="fourMana"></span>');
 	newString = newString.replace(/{X}/g, '<span class="xMana"></span>');
 	newString = newString.replace(/{T}/g, '<span class="tapSymbol"></span>');
 	newString = newString.replace(/\n/g, '<br>');
@@ -150,7 +150,7 @@ function autocompleteSetup(input){
 					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
 							var currentDiv = document.getElementsByClassName(divs[i])[0];						//i think this works now but keep an eye on it
-							currentDiv.innerHTML = "";
+							currentDiv.outerHTML = "";
 							divs.shift();
 						}
 						
