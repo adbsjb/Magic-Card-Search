@@ -1,8 +1,13 @@
 			#cardWrapper{
-				width:325px;
-				height:500px;
+				width:300px;
+				height:auto;
 				padding: 10px;
-				border: 5px;
+				margin: 10px;
+				border: 2px;
+				border-radius: 5px;
+				border-color: transparent;
+				border-style: solid;
+				position: relative;
 			}
 			#name{
 				display: inline;
@@ -20,6 +25,7 @@
 				width:300px;
 				height:200px;
 				float:center;
+				text-align:center;
 			}
 			
 			#cardImage{
@@ -43,7 +49,7 @@
 			}
 			
 			#scryfallLinkBox{
-				text-align:center;
+				text-align:left;
 			}
 			
 			
@@ -173,4 +179,16 @@
 				height:15px;
 				width:15px;
 				display: inline-block;
+			}
+			
+			.blackBorder{
+				border-color: black !important;
+			}
+			
+			.silverBorder{
+				border-color: silver !important;
+			}
+			
+			.noBorder{
+				border-color: transparent;
 			}

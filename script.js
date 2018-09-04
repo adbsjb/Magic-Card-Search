@@ -44,11 +44,13 @@ function loadDoc(){
 		document.getElementById("scryfall_Link").innerHTML = "";
 		document.getElementById("pt").innerHTML = "";
 		document.getElementById("flavor_text").innerHTML = "";
+		document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
+		document.getElementById("cardWrapper").classList.add("noBorder");	
 	}	
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var cardObject = JSON.parse(this.responseText);						
-													
+			
 			document.getElementById("name").innerHTML = cardObject.name;
 			var manaSymbols = cardObject.mana_cost;
 			document.getElementById("mana_cost").innerHTML = replaceSymbols(manaSymbols);
@@ -81,7 +83,9 @@ function loadDoc(){
 				power = "";
 				toughness = "";
 			}
-			document.getElementById("pt").innerHTML = power + toughness;
+			document.getElementById("pt").innerHTML = power + toughness;			
+			document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
+			document.getElementById("cardWrapper").classList.add(cardObject.border_color + "Border");
 			
 		}
 		else if(this.status == 404){
@@ -94,6 +98,8 @@ function loadDoc(){
 			document.getElementById("pt").innerHTML = "";
 			document.getElementById("scryfall_Link").innerHTML = "";
 			document.getElementById("flavor_text").innerHTML = "";
+			document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
+			document.getElementById("cardWrapper").classList.add("noBorder");
 		}
 	};			
 	

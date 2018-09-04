@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="styles.css">
-		<title>MTG Search</title>
+		<title>Cardboard Tutor</title>
 	</head>
 	<body>
 		<form autocomplete="off">
@@ -14,7 +14,7 @@
 			<button id="button" type="button" onclick="loadDoc()" style="margin-left: 50px;">Request Data</button>
 		</form>
 
-		<div id="cardWrapper">
+		<div id="cardWrapper" class="noBorder">
 		<p id="name"></p>
 		<p id="mana_cost"></p>
 		<div id="cardImageBox">
@@ -25,9 +25,9 @@
 		<p id="flavor_text"></p>
 		<p id="artist"></p>
 		<p id="pt"></p>
+		</div>
 		<div id="scryfallLinkBox">
 			<a id="scryfall_Link" target="_blank"></a>
-		</div>
 		</div>
 		
 		<script src="script.js"></script>
