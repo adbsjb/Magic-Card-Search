@@ -152,7 +152,7 @@ function autocompleteSetup(input){
 					index++;
 					inputBox.parentNode.appendChild(a);
 					
-					
+					//if more than one autocomplete is displayed at once, remove all but the latest one
 					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
 							var currentDiv = document.getElementsByClassName(divs[i])[0];						//i think this works now but keep an eye on it
@@ -162,6 +162,7 @@ function autocompleteSetup(input){
 						
 					}
 					
+					//builds a autocomplete item to be added to the autocomplete list.
 					for (i = 0; i < array.data.length; i++){
 						
 						b = document.createElement("DIV");
@@ -185,7 +186,7 @@ function autocompleteSetup(input){
 		
 	});
 
-
+	//when the down, up or enter keys are pressed from the autocomplete menu they perform their relative actions
 	input.addEventListener("keydown", function(e){
 
 		var x = document.getElementById(this.id + "autocomplete-list");
@@ -211,6 +212,7 @@ function autocompleteSetup(input){
 
 	});
 
+	//makes the current autocomplete item an active item, highlighting it
 	function addActive(x){
 
 		if(!x){
@@ -226,7 +228,7 @@ function autocompleteSetup(input){
 			currentFocus = (x.length -1);
 		}
 		
-		x[currentFocus].classList.add("autocomplete-active");							//chrome is complaining that x [currentfocus] isnt defifined sometimes. v confused
+		x[currentFocus].classList.add("autocomplete-active");
 	}
 
 	function removeActive(x){
@@ -235,6 +237,7 @@ function autocompleteSetup(input){
 		}			
 	}
 
+	//closes all autocomplete items
 	function closeAllLists(elmnt){
 
 		divs = [];
