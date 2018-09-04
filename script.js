@@ -30,7 +30,7 @@ function loadDoc(){
 	if(input != ""){
 		
 		
-		
+	
 		xhttp.open("GET", "https://api.scryfall.com/cards/named?fuzzy=" + input, true);
 		xhttp.send();
 	}
@@ -46,6 +46,10 @@ function loadDoc(){
 		document.getElementById("flavor_text").innerHTML = "";
 		document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
 		document.getElementById("cardWrapper").classList.add("noBorder");	
+		document.getElementById("lowestPrice").innerHTML = "";
+		document.getElementById("lowestPriceEx").innerHTML = "";
+		document.getElementById("lowestPriceFoil").innerHTML = "";
+		document.getElementById("averagePrice").innerHTML = "";		
 	}	
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -86,6 +90,7 @@ function loadDoc(){
 			document.getElementById("pt").innerHTML = power + toughness;			
 			document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
 			document.getElementById("cardWrapper").classList.add(cardObject.border_color + "Border");
+			cardMarketDetails(cardObject);
 			
 		}
 		else if(this.status == 404){
@@ -101,6 +106,7 @@ function loadDoc(){
 			document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
 			document.getElementById("cardWrapper").classList.add("noBorder");
 		}
+		
 	};			
 	
 }
@@ -250,4 +256,29 @@ function autocompleteSetup(input){
 	document.addEventListener("click", function(e){
 		closeAllLists();
 	});			
+}
+
+
+
+function cardMarketDetails(cardObject){
+	
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "https://api.cardmarket.com/ws/v2.0/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1");
+	xhttp.send();
+	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var cardMarketObject = JSON.parse(this.responseText);
+			document.getElementById("lowestPrice").innerHTML = "Lowest Price: €" + cardMarketObject.priceGuide.LOW;
+			document.getElementById("lowestPriceEx").innerHTML = "Lowest Price (Excellent Condition+): €" + cardMarketObject.priceGuide.LOWEX;	//might need to put a "+" at end here. See when api authorized
+			document.getElementById("lowestPriceFoil").innerHTML = "Lowest Foil Price: €" + cardMarketObject.priceGuide.LOWFOIL;
+			document.getElementById("averagePrice").innerHTML = "Average Price: €" + cardMarketObject.priceGuide.AVG;
+		}
+		else{
+			document.getElementById("lowestPrice").innerHTML = "Cardmarket API did not return data";
+			document.getElementById("lowestPriceEx").innerHTML = "";
+			document.getElementById("lowestPriceFoil").innerHTML = "";
+			document.getElementById("averagePrice").innerHTML = "";			
+		}
+	}
 }
