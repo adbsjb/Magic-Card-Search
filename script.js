@@ -1,4 +1,3 @@
-var cardsArray;
 var cardObjects;
 var userInput = $("#myInput")[0];
 autocompleteSetup(userInput);
@@ -114,7 +113,7 @@ function loadDoc(){
 
 
 
-userInput.addEventListener("keyup", function(event) {
+$("#myInput").keyup(function(event) {
 	event.preventDefault();
 	if (event.keyCode == 13) {
 		$("#button")[0].click();
@@ -147,22 +146,21 @@ function autocompleteSetup(input){
 				xhttp.send();
 			}
 			
+			a = document.createElement("DIV");
+			a.classList.add(index);
+			index++;
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-					var array = JSON.parse(this.responseText);
-					
-					a = document.createElement("DIV");
+				
+					var array = JSON.parse(this.responseText);					
 					a.setAttribute("id", inputBox.id + "autocomplete-list");
-					a.setAttribute("class", "autocomplete-items");
-					a.classList.add(index);
-					divs.push(a.classList[1]);
-					index++;
-					inputBox.parentNode.appendChild(a);
-					
+					a.setAttribute("class", "autocomplete-items");					
+					divs.push(a.classList[0]);					
+					inputBox.parentNode.appendChild(a);					
 					
 					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
-							var currentDiv = document.getElementsByClassName(divs[i])[0];						//i think this works now but keep an eye on it
+							var currentDiv = $("." + divs[i])[0];						//i think this works now but keep an eye on it
 							currentDiv.outerHTML = "";
 							divs.shift();
 						}
@@ -178,7 +176,8 @@ function autocompleteSetup(input){
 						b.innerHTML = b.innerHTML.replace(caseCorrectInput, "<strong>" + caseCorrectInput + "</strong>")
 						b.innerHTML += "<input type='hidden' value='" + array.data[i] + "'>";
 						b.addEventListener("click", function(e) {
-							inputBox.value = this.getElementsByTagName("input")[0].value;
+							var test = $("#myInput");
+							inputBox.value = this.innerText;
 							closeAllLists();
 						});
 						a.appendChild(b);
@@ -193,7 +192,7 @@ function autocompleteSetup(input){
 	});
 
 
-	input.addEventListener("keydown", function(e){
+	$("#myInput").keydown(function(e){
 
 		var x = $("#" + this.id + "autocomplete-list")[0];
 		if (x) x = x.getElementsByTagName("div");
@@ -215,6 +214,10 @@ function autocompleteSetup(input){
 				}
 			}
 		}
+		
+	else if (e.keyCode == 8){
+		closeAllLists();
+	}				
 
 	});
 
@@ -245,7 +248,7 @@ function autocompleteSetup(input){
 	function closeAllLists(elmnt){
 
 		divs = [];
-		var x = document.getElementsByClassName("autocomplete-items");
+		var x = $(".autocomplete-items");
 		for(var i = 0; i < x.length; i++){
 		
 			if(elmnt != x[i] && elmnt != input){
@@ -254,7 +257,7 @@ function autocompleteSetup(input){
 		}		
 	}
 
-	document.addEventListener("click", function(e){
+	$(document).click(function(e){
 		closeAllLists();
 	});			
 }
