@@ -4,6 +4,7 @@ autocompleteSetup(document.getElementById("myInput"));
 
 
 function replaceSymbols(newString){
+	//replaces all references to symbols with actual symbols in given string
 	newString = newString.replace(/{W}/g, '<span class="whiteMana"></span>');
 	newString = newString.replace(/{U}/g, '<span class="blueMana"></span>');
 	newString = newString.replace(/{B}/g, '<span class="blackMana"></span>');
@@ -35,6 +36,7 @@ function loadDoc(){
 		xhttp.send();
 	}
 	else{
+		//if nothing in input box, clear all fields
 		document.getElementById("name").innerHTML = "";
 		document.getElementById("mana_cost").innerHTML = "";
 		document.getElementById("cardImage").src = "";
@@ -48,6 +50,8 @@ function loadDoc(){
 		document.getElementById("cardWrapper").classList.add("noBorder");	
 	}	
 	xhttp.onreadystatechange = function() {
+		
+		//if API returned an object, populate all fields
 		if (this.readyState == 4 && this.status == 200) {
 			var cardObject = JSON.parse(this.responseText);						
 			
@@ -89,6 +93,8 @@ function loadDoc(){
 			
 		}
 		else if(this.status == 404){
+			//if no result found, print error
+			
 			document.getElementById("name").innerHTML = "Search not specific enough or card doesn't exist.";
 			document.getElementById("mana_cost").innerHTML = "";
 			document.getElementById("cardImage").src = "";
@@ -105,7 +111,7 @@ function loadDoc(){
 	
 }
 
-
+//when enter pressed, emulate clicking the button
 var userInput = document.getElementById("myInput");
 userInput.addEventListener("keyup", function(event) {
 	event.preventDefault();
@@ -119,6 +125,8 @@ var index = 0;
 function autocompleteSetup(input){
 
 	var currentFocus;
+	
+	//listen for something to be typed (in input box?)
 	input.addEventListener("input", function (e){
 		
 		var inputBox = this;
@@ -133,13 +141,14 @@ function autocompleteSetup(input){
 		count = 0;
 		
 		if(input.length > 2 ){
-			
+			//get autocomplete object from scryfall. This stores the 20 closest matches to whatever was typed in.
 			var xhttp = new XMLHttpRequest();
 			if(input != ""){		
 				xhttp.open("GET", "https://api.scryfall.com/cards/autocomplete?q=" + input, true);
 				xhttp.send();
 			}
 			
+			//when API request is returned, do this get elements of it and add it to a list
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 					var array = JSON.parse(this.responseText);
