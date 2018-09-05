@@ -4,6 +4,7 @@ autocompleteSetup(userInput);
 
 
 function replaceSymbols(newString){
+	//replaces all references to symbols with actual symbols in given string
 	newString = newString.replace(/{W}/g, '<span class="whiteMana"></span>');
 	newString = newString.replace(/{U}/g, '<span class="blueMana"></span>');
 	newString = newString.replace(/{B}/g, '<span class="blackMana"></span>');
@@ -35,6 +36,7 @@ function loadDoc(){
 		xhttp.send();
 	}
 	else{
+  //if nothing in input box, clear all fields
 		$("#name")[0].innerHTML = "";
 		$("#mana_cost")[0].innerHTML = "";
 		$("#cardImage")[0].src = "";
@@ -52,6 +54,8 @@ function loadDoc(){
 		$("#averagePrice")[0].innerHTML = "";		
 	}	
 	xhttp.onreadystatechange = function() {
+		
+		//if API returned an object, populate all fields
 		if (this.readyState == 4 && this.status == 200) {
 			var cardObject = JSON.parse(this.responseText);						
 			
@@ -94,6 +98,7 @@ function loadDoc(){
 			
 		}
 		else if(this.status == 404){
+  //if no result found, print error
 			$("#name")[0].innerHTML = "Search not specific enough or card doesn't exist.";
 			$("#mana_cost")[0].innerHTML = "";
 			$("#cardImage")[0].src = "";
@@ -112,7 +117,7 @@ function loadDoc(){
 }
 
 
-
+//when enter pressed, emulate clicking the button
 $("#myInput").keyup(function(event) {
 	event.preventDefault();
 	if (event.keyCode == 13) {
@@ -125,6 +130,8 @@ var index = 0;
 function autocompleteSetup(input){
 
 	var currentFocus;
+	
+	//listen for something to be typed (in input box?)
 	input.addEventListener("input", function (e){
 		
 		var inputBox = this;
@@ -139,16 +146,21 @@ function autocompleteSetup(input){
 		count = 0;
 		
 		if(input.length > 2 ){
-			
+			//get autocomplete object from scryfall. This stores the 20 closest matches to whatever was typed in.
 			var xhttp = new XMLHttpRequest();
 			if(input != ""){		
 				xhttp.open("GET", "https://api.scryfall.com/cards/autocomplete?q=" + input, true);
 				xhttp.send();
 			}
 			
+
+			
+
 			a = document.createElement("DIV");
 			a.classList.add(index);
 			index++;
+
+      //when API request is returned, do this get elements of it and add it to a list
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 				
@@ -158,6 +170,7 @@ function autocompleteSetup(input){
 					divs.push(a.classList[0]);					
 					inputBox.parentNode.appendChild(a);					
 					
+          //if more than one autocomplete is displayed at once, remove all but the latest one
 					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
 							var currentDiv = $("." + divs[i])[0];						//i think this works now but keep an eye on it
@@ -167,6 +180,7 @@ function autocompleteSetup(input){
 						
 					}
 					
+					//builds a autocomplete item to be added to the autocomplete list.
 					for (i = 0; i < array.data.length; i++){
 						
 						b = document.createElement("DIV");
@@ -192,6 +206,7 @@ function autocompleteSetup(input){
 	});
 
 
+//when the down, up or enter keys are pressed from the autocomplete menu they perform their relative actions
 	$("#myInput").keydown(function(e){
 
 		var x = $("#" + this.id + "autocomplete-list")[0];
@@ -221,6 +236,7 @@ function autocompleteSetup(input){
 
 	});
 
+	//makes the current autocomplete item an active item, highlighting it
 	function addActive(x){
 
 		if(!x){
@@ -236,7 +252,7 @@ function autocompleteSetup(input){
 			currentFocus = (x.length -1);
 		}
 		
-		x[currentFocus].classList.add("autocomplete-active");							//chrome is complaining that x [currentfocus] isnt defifined sometimes. v confused
+		x[currentFocus].classList.add("autocomplete-active");
 	}
 
 	function removeActive(x){
@@ -245,6 +261,7 @@ function autocompleteSetup(input){
 		}			
 	}
 
+	//closes all autocomplete items
 	function closeAllLists(elmnt){
 
 		divs = [];
