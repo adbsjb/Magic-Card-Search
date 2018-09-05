@@ -1,6 +1,6 @@
-var cardsArray;
 var cardObjects;
-autocompleteSetup(document.getElementById("myInput"));
+var userInput = $("#myInput")[0];
+autocompleteSetup(userInput);
 
 
 function replaceSymbols(newString){
@@ -26,53 +26,57 @@ function sleep(ms) {
 
 function loadDoc(){	
 	var xhttp = new XMLHttpRequest();
-	var input = document.getElementById("myInput").value;
-	if(input != ""){
+	var input = $("#myInput")[0].value;
+	if(input != "" && input != null){
 		
 		
-		
+	
 		xhttp.open("GET", "https://api.scryfall.com/cards/named?fuzzy=" + input, true);
 		xhttp.send();
 	}
 	else{
-		document.getElementById("name").innerHTML = "";
-		document.getElementById("mana_cost").innerHTML = "";
-		document.getElementById("cardImage").src = "";
-		document.getElementById("type_line").innerHTML = "";
-		document.getElementById("oracle_text").innerHTML = "";
-		document.getElementById("artist").innerHTML = "";
-		document.getElementById("scryfall_Link").innerHTML = "";
-		document.getElementById("pt").innerHTML = "";
-		document.getElementById("flavor_text").innerHTML = "";
-		document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
-		document.getElementById("cardWrapper").classList.add("noBorder");	
+		$("#name")[0].innerHTML = "";
+		$("#mana_cost")[0].innerHTML = "";
+		$("#cardImage")[0].src = "";
+		$("#type_line")[0].innerHTML = "";
+		$("#oracle_text")[0].innerHTML = "";
+		$("#artist")[0].innerHTML = "";
+		$("#scryfall_Link")[0].innerHTML = "";
+		$("#pt")[0].innerHTML = "";
+		$("#flavor_text")[0].innerHTML = "";
+		$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+		$("#cardWrapper")[0].classList.add("noBorder");	
+		$("#lowestPrice")[0].innerHTML = "";
+		$("#lowestPriceEx")[0].innerHTML = "";
+		$("#lowestPriceFoil")[0].innerHTML = "";
+		$("#averagePrice")[0].innerHTML = "";		
 	}	
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var cardObject = JSON.parse(this.responseText);						
 			
-			document.getElementById("name").innerHTML = cardObject.name;
+			$("#name")[0].innerHTML = cardObject.name;
 			var manaSymbols = cardObject.mana_cost;
-			document.getElementById("mana_cost").innerHTML = replaceSymbols(manaSymbols);
-			if(document.getElementById("checkImage").checked){
-				document.getElementById("cardImage").src = cardObject.image_uris.art_crop;
+			$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
+			if($("#checkImage")[0].checked){
+				$("#cardImage")[0].src = cardObject.image_uris.art_crop;
 			}
 			else{
-				document.getElementById("cardImage").src = "";
+				$("#cardImage")[0].src = "";
 			}
 			
-			document.getElementById("type_line").innerHTML = cardObject.type_line;
+			$("#type_line")[0].innerHTML = cardObject.type_line;
 			var oracle = cardObject.oracle_text;
-			document.getElementById("oracle_text").innerHTML = replaceSymbols(oracle);
+			$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
 			if(cardObject.flavor_text != null){
-			document.getElementById("flavor_text").innerHTML = cardObject.flavor_text;
+			$("#flavor_text").innerHTML = cardObject.flavor_text;
 			}
 			else{
-			document.getElementById("flavor_text").innerHTML = "";
+			$("#flavor_text")[0].innerHTML = "";
 			}
-			document.getElementById("artist").innerHTML = "Artist: " + cardObject.artist;
-			document.getElementById("scryfall_Link").href = cardObject.scryfall_uri;
-			document.getElementById("scryfall_Link").innerHTML = "on Scryfall";
+			$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
+			$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
+			$("#scryfall_Link")[0].innerHTML = "on Scryfall";
 			var power;
 			var toughness;
 			if(cardObject.power && cardObject.toughness != null){
@@ -83,34 +87,36 @@ function loadDoc(){
 				power = "";
 				toughness = "";
 			}
-			document.getElementById("pt").innerHTML = power + toughness;			
-			document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
-			document.getElementById("cardWrapper").classList.add(cardObject.border_color + "Border");
+			$("#pt")[0].innerHTML = power + toughness;			
+			$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+			$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
+			cardMarketDetails(cardObject);
 			
 		}
 		else if(this.status == 404){
-			document.getElementById("name").innerHTML = "Search not specific enough or card doesn't exist.";
-			document.getElementById("mana_cost").innerHTML = "";
-			document.getElementById("cardImage").src = "";
-			document.getElementById("type_line").innerHTML = "";
-			document.getElementById("oracle_text").innerHTML = "";
-			document.getElementById("artist").innerHTML = "";
-			document.getElementById("pt").innerHTML = "";
-			document.getElementById("scryfall_Link").innerHTML = "";
-			document.getElementById("flavor_text").innerHTML = "";
-			document.getElementById("cardWrapper").classList.remove(document.getElementById("cardWrapper").classList.item(0));
-			document.getElementById("cardWrapper").classList.add("noBorder");
+			$("#name")[0].innerHTML = "Search not specific enough or card doesn't exist.";
+			$("#mana_cost")[0].innerHTML = "";
+			$("#cardImage")[0].src = "";
+			$("#type_line")[0].innerHTML = "";
+			$("#oracle_text")[0].innerHTML = "";
+			$("#artist")[0].innerHTML = "";
+			$("#pt")[0].innerHTML = "";
+			$("#scryfall_Link")[0].innerHTML = "";
+			$("#flavor_text")[0].innerHTML = "";
+			$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+			$("#cardWrapper")[0].classList.add("noBorder");
 		}
+		
 	};			
 	
 }
 
 
-var userInput = document.getElementById("myInput");
-userInput.addEventListener("keyup", function(event) {
+
+$("#myInput").keyup(function(event) {
 	event.preventDefault();
 	if (event.keyCode == 13) {
-		document.getElementById("button").click();
+		$("#button")[0].click();
 	}
 });		
 	
@@ -140,22 +146,21 @@ function autocompleteSetup(input){
 				xhttp.send();
 			}
 			
+			a = document.createElement("DIV");
+			a.classList.add(index);
+			index++;
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-					var array = JSON.parse(this.responseText);
-					
-					a = document.createElement("DIV");
+				
+					var array = JSON.parse(this.responseText);					
 					a.setAttribute("id", inputBox.id + "autocomplete-list");
-					a.setAttribute("class", "autocomplete-items");
-					a.classList.add(index);
-					divs.push(a.classList[1]);
-					index++;
-					inputBox.parentNode.appendChild(a);
-					
+					a.setAttribute("class", "autocomplete-items");					
+					divs.push(a.classList[0]);					
+					inputBox.parentNode.appendChild(a);					
 					
 					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
-							var currentDiv = document.getElementsByClassName(divs[i])[0];						//i think this works now but keep an eye on it
+							var currentDiv = $("." + divs[i])[0];						//i think this works now but keep an eye on it
 							currentDiv.outerHTML = "";
 							divs.shift();
 						}
@@ -171,7 +176,8 @@ function autocompleteSetup(input){
 						b.innerHTML = b.innerHTML.replace(caseCorrectInput, "<strong>" + caseCorrectInput + "</strong>")
 						b.innerHTML += "<input type='hidden' value='" + array.data[i] + "'>";
 						b.addEventListener("click", function(e) {
-							inputBox.value = this.getElementsByTagName("input")[0].value;
+							var test = $("#myInput");
+							inputBox.value = this.innerText;
 							closeAllLists();
 						});
 						a.appendChild(b);
@@ -186,9 +192,9 @@ function autocompleteSetup(input){
 	});
 
 
-	input.addEventListener("keydown", function(e){
+	$("#myInput").keydown(function(e){
 
-		var x = document.getElementById(this.id + "autocomplete-list");
+		var x = $("#" + this.id + "autocomplete-list")[0];
 		if (x) x = x.getElementsByTagName("div");
 		if (e.keyCode == 40){
 		
@@ -208,6 +214,10 @@ function autocompleteSetup(input){
 				}
 			}
 		}
+		
+	else if (e.keyCode == 8){
+		closeAllLists();
+	}				
 
 	});
 
@@ -238,7 +248,7 @@ function autocompleteSetup(input){
 	function closeAllLists(elmnt){
 
 		divs = [];
-		var x = document.getElementsByClassName("autocomplete-items");
+		var x = $(".autocomplete-items");
 		for(var i = 0; i < x.length; i++){
 		
 			if(elmnt != x[i] && elmnt != input){
@@ -247,7 +257,32 @@ function autocompleteSetup(input){
 		}		
 	}
 
-	document.addEventListener("click", function(e){
+	$(document).click(function(e){
 		closeAllLists();
 	});			
+}
+
+
+
+function cardMarketDetails(cardObject){
+	
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "https://api.cardmarket.com/ws/v2.0/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1");
+	xhttp.send();
+	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var cardMarketObject = JSON.parse(this.responseText);
+			$("#lowestPrice")[0].innerHTML = "Lowest Price: €" + cardMarketObject.priceGuide.LOW;
+			$("#lowestPriceEx")[0].innerHTML = "Lowest Price (Excellent Condition+): €" + cardMarketObject.priceGuide.LOWEX;	//might need to put a "+" at end here. See when api authorized
+			$("#lowestPriceFoil")[0].innerHTML = "Lowest Foil Price: €" + cardMarketObject.priceGuide.LOWFOIL;
+			$("#averagePrice")[0].innerHTML = "Average Price: €" + cardMarketObject.priceGuide.AVG;
+		}
+		else{
+			$("#lowestPrice")[0].innerHTML = "Cardmarket API did not return data";
+			$("#lowestPriceEx")[0].innerHTML = "";
+			$("#lowestPriceFoil")[0].innerHTML = "";
+			$("#averagePrice")[0].innerHTML = "";			
+		}
+	}
 }
