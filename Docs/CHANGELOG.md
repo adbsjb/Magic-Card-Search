@@ -1,4 +1,4 @@
-#v1.1.1 - Google analytics
+#v1.1.1 - Google analytics edition
 Added Google analytics
 
 
