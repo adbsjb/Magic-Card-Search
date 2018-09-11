@@ -1,3 +1,11 @@
+#v1.1 - Symbols everywhere edition
+Added more symbols and fixed a bug
+
+* Added support for almost all symbols on magic cards
+* Fixed a bug where only one mana symbol would appear for each 1,2,3 and 4 colourless mana
+
+
+
 # v1.0 - Cardboard Tutor edition
 Actually gave this project a name! (Also borders)
 

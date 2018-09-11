@@ -85,8 +85,73 @@
 				color: black;
 			}
 			
+			.whiteBorder{
+				border-color: black !important;
+			}
+			
+			.blackBorder{
+				border-color: black !important;
+			}
+			
+			.silverBorder{
+				border-color: silver !important;
+			}
+			
+			.noBorder{
+				border-color: transparent;
+			}
+			
+			
+			.chaosSymbol{
+				background-image:url("symbols/chaos.svg");
+				background-size: cover;
+				height:15px;
+				width:18px;
+				display: inline-block;
+			}
+			
 			.tapSymbol{
 				background-image:url("symbols/T.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.untapSymbol{
+				background-image:url("symbols/Q.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.xMana{
+				background-image:url("symbols/X.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.yMana{
+				background-image:url("symbols/Y.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.zMana{
+				background-image:url("symbols/Z.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.infiniteMana{
+				background-image:url("symbols/Infinite.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -139,6 +204,126 @@
 				width:15px;
 				display: inline-block;
 			}
+			
+			.whiteblueMana{
+				background-image:url("symbols/WU.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.whiteblackMana{
+				background-image:url("symbols/WB.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.blueblackMana{
+				background-image:url("symbols/UB.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.blueredMana{
+				background-image:url("symbols/UR.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.blackgreenMana{
+				background-image:url("symbols/BG.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.blackredMana{
+				background-image:url("symbols/BR.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.redgreenMana{
+				background-image:url("symbols/RG.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.redwhiteMana{
+				background-image:url("symbols/RG.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.greenwhiteMana{
+				background-image:url("symbols/GW.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.greenblueMana{
+				background-image:url("symbols/GU.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.whitepMana{
+				background-image:url("symbols/WP.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.bluepMana{
+				background-image:url("symbols/UP.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.blackpMana{
+				background-image:url("symbols/BP.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.redpMana{
+				background-image:url("symbols/RP.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.greenpMana{
+				background-image:url("symbols/GP.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
 						
 			.oneMana{
 				background-image:url("symbols/1.svg");
@@ -151,6 +336,46 @@
 			
 			.twoMana{
 				background-image:url("symbols/2.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.twobMana{
+				background-image:url("symbols/2b.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.twogMana{
+				background-image:url("symbols/2g.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.tworMana{
+				background-image:url("symbols/2r.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.twouMana{
+				background-image:url("symbols/2u.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.twowMana{
+				background-image:url("symbols/2w.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -173,22 +398,146 @@
 				display: inline-block;
 			}
 			
-			.xMana{
-				background-image:url("symbols/X.svg");
+			.fiveMana{
+				background-image:url("symbols/5.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
 				display: inline-block;
 			}
 			
-			.blackBorder{
-				border-color: black !important;
+			.sixMana{
+				background-image:url("symbols/6.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
 			}
 			
-			.silverBorder{
-				border-color: silver !important;
+			.sevenMana{
+				background-image:url("symbols/7.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
 			}
 			
-			.noBorder{
-				border-color: transparent;
+			.eightMana{
+				background-image:url("symbols/8.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.nineMana{
+				background-image:url("symbols/9.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.tenMana{
+				background-image:url("symbols/10.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.elevenMana{
+				background-image:url("symbols/11.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.twelveMana{
+				background-image:url("symbols/12.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.thirteenMana{
+				background-image:url("symbols/13.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.fourteenMana{
+				background-image:url("symbols/14.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.fifteenMana{
+				background-image:url("symbols/15.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.sixteenMana{
+				background-image:url("symbols/16.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.seventeenMana{
+				background-image:url("symbols/17.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.eighteenMana{
+				background-image:url("symbols/18.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.nineteenMana{
+				background-image:url("symbols/19.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.twentyMana{
+				background-image:url("symbols/20.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.onehundredMana{
+				background-image:url("symbols/100.svg");
+				background-size: cover;
+				height:15px;
+				width:30px;
+				display: inline-block;
+			}
+			
+			.onemillionMana{
+				background-image:url("symbols/1000000.svg");
+				background-size: cover;
+				height:15px;
+				width:76px;
+				display: inline-block;
 			}

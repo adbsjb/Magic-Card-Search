@@ -11,13 +11,58 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{R}/g, '<span class="redMana"></span>');
 	newString = newString.replace(/{G}/g, '<span class="greenMana"></span>');
 	newString = newString.replace(/{C}/g, '<span class="colourlessMana"></span>');
-	newString = newString.replace('{1}', '<span class="oneMana"></span>');
-	newString = newString.replace('{2}', '<span class="twoMana"></span>');
-	newString = newString.replace('{3}', '<span class="threeMana"></span>');
-	newString = newString.replace('{4}', '<span class="fourMana"></span>');
-	newString = newString.replace(/{X}/g, '<span class="xMana"></span>');
+	newString = newString.replace(/{W\/U}/g, '<span class="whiteblueMana"></span>');
+	newString = newString.replace(/{W\/B}/g, '<span class="whiteblackMana"></span>');
+	newString = newString.replace(/{U\/B}/g, '<span class="blueblackMana"></span>');
+	newString = newString.replace(/{U\/R}/g, '<span class="blueredMana"></span>');
+	newString = newString.replace(/{B\/R}/g, '<span class="blackredMana"></span>');
+	newString = newString.replace(/{B\/G}/g, '<span class="blackgreenMana"></span>');
+	newString = newString.replace(/{R\/G}/g, '<span class="redgreenMana"></span>');
+	newString = newString.replace(/{R\/W}/g, '<span class="redwhiteMana"></span>');
+	newString = newString.replace(/{G\/W}/g, '<span class="greenwhiteMana"></span>');
+	newString = newString.replace(/{G\/U}/g, '<span class="greenblueMana"></span>');
+	newString = newString.replace(/{W\/P}/g, '<span class="whitepMana"></span>');
+	newString = newString.replace(/{U\/P}/g, '<span class="bluepMana"></span>');
+	newString = newString.replace(/{B\/P}/g, '<span class="blackpMana"></span>');
+	newString = newString.replace(/{R\/P}/g, '<span class="redpMana"></span>');
+	newString = newString.replace(/{G\/P}/g, '<span class="greenpMana"></span>');
+	newString = newString.replace(/\{1\}/g, '<span class="oneMana"></span>');
+	newString = newString.replace(/\{2\}/g, '<span class="twoMana"></span>');
+	newString = newString.replace(/\{2\/B\}/g, '<span class="twobMana"></span>');
+	newString = newString.replace(/\{2\/G\}/g, '<span class="twogMana"></span>');
+	newString = newString.replace(/\{2\/R\}/g, '<span class="tworMana"></span>');
+	newString = newString.replace(/\{2\/U\}/g, '<span class="twouMana"></span>');
+	newString = newString.replace(/\{2\/W\}/g, '<span class="twowMana"></span>');
+	newString = newString.replace(/\{3\}/g, '<span class="threeMana"></span>');
+	newString = newString.replace(/\{4\}/g, '<span class="fourMana"></span>');
+	newString = newString.replace(/\{5\}/g, '<span class="fiveMana"></span>');
+	newString = newString.replace(/\{6\}/g, '<span class="sixMana"></span>');
+	newString = newString.replace(/\{7\}/g, '<span class="sevenMana"></span>');
+	newString = newString.replace(/\{8\}/g, '<span class="eightMana"></span>');
+	newString = newString.replace(/\{9\}/g, '<span class="nineMana"></span>');
+	newString = newString.replace(/\{10\}/g, '<span class="tenMana"></span>');
+	newString = newString.replace(/\{11\}/g, '<span class="elevenMana"></span>');
+	newString = newString.replace(/\{12\}/g, '<span class="twelveMana"></span>');
+	newString = newString.replace(/\{13\}/g, '<span class="thirteenMana"></span>');
+	newString = newString.replace(/\{14\}/g, '<span class="fourteenMana"></span>');
+	newString = newString.replace(/\{15\}/g, '<span class="fifteenMana"></span>');
+	newString = newString.replace(/\{16\}/g, '<span class="sixteenMana"></span>');
+	newString = newString.replace(/\{17\}/g, '<span class="seventeenMana"></span>');
+	newString = newString.replace(/\{18\}/g, '<span class="eighteenMana"></span>');
+	newString = newString.replace(/\{19\}/g, '<span class="nineteenMana"></span>');
+	newString = newString.replace(/\{20\}/g, '<span class="twentyMana"></span>');
+	newString = newString.replace(/\{100\}/g, '<span class="onehundredMana"></span>');
+	newString = newString.replace(/\{1000000\}/g, '<span class="onemillionMana"></span>');
+	newString = newString.replace(/\{∞\}/g, '<span class="infiniteMana"></span>');
 	newString = newString.replace(/{T}/g, '<span class="tapSymbol"></span>');
+	newString = newString.replace(/{X}/g, '<span class="xMana"></span>');
+	newString = newString.replace(/{Y}/g, '<span class="yMana"></span>');
+	newString = newString.replace(/{Z}/g, '<span class="zMana"></span>');
+	newString = newString.replace(/{T}/g, '<span class="tapSymbol"></span>');
+	newString = newString.replace(/{Q}/g, '<span class="untapSymbol"></span>');
+	newString = newString.replace(/{CHAOS}/g, '<span class="chaosSymbol"></span>');	
 	newString = newString.replace(/\n/g, '<br>');
+	newString = newString.replace(/\.5/g, '½');
 	return newString;
 }
 
@@ -71,9 +116,14 @@ function loadDoc(){
 			
 			$("#type_line")[0].innerHTML = cardObject.type_line;
 			var oracle = cardObject.oracle_text;
-			$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
+			if(oracle != null){
+				$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
+			}
+			else{
+				$("#oracle_text")[0].innerHTML = "";			
+			}
 			if(cardObject.flavor_text != null){
-			$("#flavor_text").innerHTML = cardObject.flavor_text;
+			$("#flavor_text")[0].innerHTML = cardObject.flavor_text;
 			}
 			else{
 			$("#flavor_text")[0].innerHTML = "";
@@ -84,8 +134,8 @@ function loadDoc(){
 			var power;
 			var toughness;
 			if(cardObject.power && cardObject.toughness != null){
-				power = cardObject.power + "/";
-				toughness = cardObject.toughness;
+				power = replaceSymbols(cardObject.power) + "/";
+				toughness = replaceSymbols(cardObject.toughness);
 				}
 			else{
 				power = "";
@@ -93,12 +143,14 @@ function loadDoc(){
 			}
 			$("#pt")[0].innerHTML = power + toughness;			
 			$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
-			$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
-			cardMarketDetails(cardObject);
+			if($("#checkBorder")[0].checked == true){
+				$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
+			}
+			//cardMarketDetails(cardObject);			commented out until I have api permissions
 			
 		}
 		else if(this.status == 404){
-  //if no result found, print error
+		//if no result found, print error
 			$("#name")[0].innerHTML = "Search not specific enough or card doesn't exist.";
 			$("#mana_cost")[0].innerHTML = "";
 			$("#cardImage")[0].src = "";
