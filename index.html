@@ -2,18 +2,20 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="styles.css">
 		<script src="jquery.js"></script>
 		<title>Cardboard Tutor</title>
 	</head>
 	<body>
-		<form autocomplete="off">
+		
+		<form id="inputForm" autocomplete="off">
 			<div class="autocomplete">
 				<input id="myInput" type="search" value="">
 			</div>
 			<input id="checkBorder" type="checkbox">Border
 			<input id="checkImage" type="checkbox" style="margin-left: 30px;">Image
-			<button id="button" type="button" onclick="loadDoc()" style="margin-left: 50px;">Request Data</button>
+			<button id="button" type="button" onclick="loadDoc()" style="margin-left: 30px;">Request Data</button>
 		</form>
 
 		<div id="cardWrapper" class="noBorder">
@@ -38,7 +40,7 @@
 			<p id="lowestPriceFoil"></p>
 			<p id="averagePrice"></p>
 		</div>
-		
+	
 		<script src="script.js"></script>
 		
 		

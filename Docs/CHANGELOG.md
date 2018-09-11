@@ -1,3 +1,8 @@
+#v1.2 - Mobile friendly edition
+Made the site adaptave to screen sizes
+
+
+
 #v1.1.1 - Google analytics edition
 Added Google analytics
 
