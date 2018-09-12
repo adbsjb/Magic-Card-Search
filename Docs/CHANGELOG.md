@@ -1,14 +1,23 @@
-#v1.2 - Mobile friendly edition
-Made the site adaptave to screen sizes
+# v1.3 - Beautiful edition
+Used Bootstrap to make the site look better and added rulings
+
+* Now using bootstrap buttons and collapse components
+* Uses Scryfall API to get card rulings if it has any
+* Added a clear button to clear the search
 
 
 
-#v1.1.1 - Google analytics edition
+# v1.2 - Mobile friendly edition
+Made the site adaptive to screen sizes
+
+
+
+# v1.1.1 - Google analytics edition
 Added Google analytics
 
 
 
-#v1.1 - Symbols everywhere edition
+# v1.1 - Symbols everywhere edition
 Added more symbols and fixed a bug
 
 * Added support for almost all symbols on magic cards

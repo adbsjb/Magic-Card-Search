@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<script src="jquery.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
 		<title>Cardboard Tutor</title>
 	</head>
 	<body>
@@ -13,9 +15,14 @@
 			<div class="autocomplete">
 				<input id="myInput" type="search" value="">
 			</div>
-			<input id="checkBorder" type="checkbox">Border
-			<input id="checkImage" type="checkbox" style="margin-left: 30px;">Image
-			<button id="button" type="button" onclick="loadDoc()" style="margin-left: 30px;">Request Data</button>
+			<div style="display: inline-block;">
+				<input id="checkBorder" type="checkbox">Border
+				<input id="checkImage" type="checkbox" style="margin-left: 30px;">Image
+			</div>
+			<div style="display: inline-block;">
+				<button class="btn btn-outline-secondary" id="btnRequestData" type="button" onclick="loadDoc()" style="margin-left: 30px;">Request Data</button>
+				<button class="btn btn-outline-secondary" id="btnClear" type="button" onclick="clearFields()" style="margin-left: 30px;">Clear</button>
+			</div>
 		</form>
 
 		<div id="cardWrapper" class="noBorder">
@@ -40,8 +47,21 @@
 			<p id="lowestPriceFoil"></p>
 			<p id="averagePrice"></p>
 		</div>
+		<div id="rulingsWrapper" class="invisible">
+				<p>
+					<button id="rulingsButton" class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseRulings" aria-expanded="false" aria-controls="collapseRulings">
+						Card Rulings
+					</button>
+				</p>
+				<div class="collapse" id="collapseRulings">
+					<div id="rulings" class="card card-body">
+						testing
+					</div>
+				</div>
+			</div>
+			
 	
-		<script src="script.js"></script>
+		<script src="js/script.js"></script>
 		
 		
 		<!-- Global site tag (gtag.js) - Google Analytics -->
