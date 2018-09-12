@@ -150,6 +150,53 @@
 				display: inline-block;
 			}
 			
+			.hwhiteMana{
+				background-image:url("../symbols/hW.svg");
+				background-size: 8px;
+				height:15px;
+				width:7.5px;
+				display: inline-block;
+			}
+			
+			.hblueMana{
+				background-image:url("../symbols/hU.svg");
+				background-size: 8px;
+				height:15px;
+				width:7.5px;
+				display: inline-block;
+			}
+			
+			.hblackMana{
+				background-image:url("../symbols/hB.svg");
+				background-size: 8px;
+				height:15px;
+				width:7.5px;
+				display: inline-block;
+			}
+			.hredMana{
+				background-image:url("../symbols/hR.svg");
+				background-size: 8px;
+				height:15px;
+				width:7.5px;
+				display: inline-block;
+			}
+			
+			.hgreenMana{
+				background-image:url("../symbols/hG.svg");
+				background-size: 8px;
+				height:15px;
+				width:7.5px;
+				display: inline-block;
+			}
+			
+			.hcolourlessMana{
+				background-image:url("../symbols/hC.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
 			.whiteblueMana{
 				background-image:url("../symbols/WU.svg");
 				background-size: 15px;
@@ -514,10 +561,10 @@
 			}
 			
 			#cardImageBox{
-				padding-top: 10px;
-				padding-bottom:10px;
+				margin-top: 10px;
+				margin-bottom:10px;
 				width:300px;
-				height:200px;
+				height:220px;
 				float:center;
 				text-align:center;
 			}

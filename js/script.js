@@ -11,6 +11,12 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{R}/g, '<span class="redMana"></span>');
 	newString = newString.replace(/{G}/g, '<span class="greenMana"></span>');
 	newString = newString.replace(/{C}/g, '<span class="colourlessMana"></span>');
+	newString = newString.replace(/{HW}/g, '<span class="hwhiteMana"></span>');
+	newString = newString.replace(/{HU}/g, '<span class="hblueMana"></span>');
+	newString = newString.replace(/{HB}/g, '<span class="hblackMana"></span>');
+	newString = newString.replace(/{HR}/g, '<span class="hredMana"></span>');
+	newString = newString.replace(/{HG}/g, '<span class="hgreenMana"></span>');
+	newString = newString.replace(/{HC}/g, '<span class="hcolourlessMana"></span>');
 	newString = newString.replace(/{W\/U}/g, '<span class="whiteblueMana"></span>');
 	newString = newString.replace(/{W\/B}/g, '<span class="whiteblackMana"></span>');
 	newString = newString.replace(/{U\/B}/g, '<span class="blueblackMana"></span>');
@@ -67,24 +73,24 @@ function replaceSymbols(newString){
 }
 
 function getRulings(cardObject){	
-	if(cardObject.rulings_uri != null){		
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("GET", cardObject.rulings_uri, true);
-		xhttp.send();
-		
-		xhttp.onreadystatechange = function() {
-			var rulesObject = JSON.parse(this.responseText);
-			var rulesText = "<p>";
-			for(var i = 0; i < rulesObject.data.length; i++){
-				
-				rulesText = rulesText + rulesObject.data[i].comment + "<br><br>";
-				
-			}
-			rulesText = rulesText + "</p>";
-			$("#rulings")[0].innerHTML = replaceSymbols(rulesText);
-			$("#rulingsWrapper")[0].classList.add("visible");
-			$("#rulingsWrapper")[0].classList.remove("invisible");
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", cardObject.rulings_uri, true);
+	xhttp.send();
+	xhttp.onreadystatechange = function() {
+		var rulesObject = JSON.parse(this.responseText);
+		var rulesText = "";
+		if(rulesObject.data.length != 0){		
+			rulesText = "<p>"
+			for(var i = 0; i < rulesObject.data.length; i++){				
+				rulesText = rulesText + "<p>" + rulesObject.data[i].comment + "</p>";				
+			}	
 		}
+		else{
+			rulesText = "<p>No rulings</p>";		
+		}
+		$("#rulings")[0].innerHTML = replaceSymbols(rulesText);
+		$("#rulingsWrapper")[0].classList.add("visible");
+		$("#rulingsWrapper")[0].classList.remove("invisible");
 	}
 	
 }
@@ -101,13 +107,14 @@ function clearFields(){
 	$("#flavor_text")[0].innerHTML = "";
 	$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
 	$("#cardWrapper")[0].classList.add("noBorder");	
-	$("#lowestPrice")[0].innerHTML = "";
+  /*$("#lowestPrice")[0].innerHTML = "";
 	$("#lowestPriceEx")[0].innerHTML = "";
 	$("#lowestPriceFoil")[0].innerHTML = "";
-	$("#averagePrice")[0].innerHTML = "";
+	$("#averagePrice")[0].innerHTML = "";*/
 	$("#rulingsWrapper")[0].classList.remove("visible");
 	$("#rulingsWrapper")[0].classList.add("invisible");
 	$("#myInput")[0].value = "";
+	$("#mcm_link")[0].innerHTML = "";
 	
 }
 
@@ -150,7 +157,7 @@ function loadDoc(){
 				$("#oracle_text")[0].innerHTML = "";			
 			}
 			if(cardObject.flavor_text != null){
-			$("#flavor_text")[0].innerHTML = cardObject.flavor_text;
+			$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
 			}
 			else{
 			$("#flavor_text")[0].innerHTML = "";
@@ -173,8 +180,9 @@ function loadDoc(){
 			if($("#checkBorder")[0].checked == true){
 				$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
 			}
+			cardMarketDetails(cardObject);
 			getRulings(cardObject);
-			//cardMarketDetails(cardObject);			commented out until I have api permissions
+			
 			
 		}
 		else if(this.status == 404){
@@ -354,8 +362,35 @@ function autocompleteSetup(input){
 
 function cardMarketDetails(cardObject){
 	
+	$('#mcm_link')[0].href = cardObject.purchase_uris.magiccardmarket;
+	$('#mcm_link')[0].innerHTML = "on Magic Card Market";
+	
+	
+	
+	/*var myHeaders = new Headers();
+	myHeaders.set('appToken', 'NMb8kbp7HOQl92Vw');
+	myHeaders.set('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
+	myHeaders.set('accessToken', '')
+	myHeaders.set('accessSecret', '')*/
+	
+	
+	/*
+	var nonce = Math.floor((Math.random() * 10000000000000) + 1);
+	var baseString = "GET&" + encodeURIComponent("https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1") + "&";
+	var parameterString = "oauth_consumer_key=NMb8kbp7HOQl92Vw&oauth_nonce=" + nonce + "&oauth_signiture_method=HMAC-SHA1&oauth_timestamp=" + Date.now() + "&oauth_token=EegfnGYSkqPAEDvDrsKWQVo1L556njRg&oauth_version=1.0"
+	baseString = baseString + encodeURIComponent(parameterString);
+	var signingKey = encodeURIComponent("EegfnGYSkqPAEDvDrsKWQVo1L556njRg" + "&" + "")
+	
+	
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", "https://api.cardmarket.com/ws/v2.0/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1");
+	xhttp.open("GET", "https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1");
+	xhttp.setRequestHeader('appToken', 'NMb8kbp7HOQl92Vw');
+	xhttp.setRequestHeader('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
+	xhttp.setRequestHeader('accessToken', '');
+	xhttp.setRequestHeader('accessSecret', '');
+	xhttp.setRequestHeader('timestamp', Date.now());
+	xhttp.setRequestHeader('nonce', '');
+	xhttp.setRequestHeader('Content-Type', 'application/json')
 	xhttp.send();
 	
 	xhttp.onreadystatechange = function() {
@@ -372,5 +407,5 @@ function cardMarketDetails(cardObject){
 			$("#lowestPriceFoil")[0].innerHTML = "";
 			$("#averagePrice")[0].innerHTML = "";			
 		}
-	}
+	}*/
 }

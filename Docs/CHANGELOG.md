@@ -1,3 +1,12 @@
+# v1.4 - Frustrating edition
+
+* Got frustrated at the complicated CardMarket API and just used a link to it in the end. I might look into it later on
+* Added half mana symbols
+* Made the rulings text look better
+* Fixed the image size so it doesn't overlap
+
+
+
 # v1.3 - Beautiful edition
 Used Bootstrap to make the site look better and added rulings
 
