@@ -1,7 +1,9 @@
+//variable declerations
 var cardObjects;
 var userInput = $("#myInput")[0];
+var divs = [];
+var index = 0;
 autocompleteSetup(userInput);
-
 
 function replaceSymbols(newString){
 	//replaces all references to symbols with actual symbols in given string
@@ -72,30 +74,31 @@ function replaceSymbols(newString){
 	return newString;
 }
 
-function getRulings(cardObject){	
+function getRulings(cardObject){
+	//get rulings for a card if it has any
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("GET", cardObject.rulings_uri, true);
 	xhttp.send();
 	xhttp.onreadystatechange = function() {
-		var rulesObject = JSON.parse(this.responseText);
-		var rulesText = "";
-		if(rulesObject.data.length != 0){		
-			rulesText = "<p>"
-			for(var i = 0; i < rulesObject.data.length; i++){				
-				rulesText = rulesText + "<p>" + rulesObject.data[i].comment + "</p>";				
-			}	
+		if (this.readyState == 4 && this.status == 200) {
+			var rulesObject = JSON.parse(this.responseText);
+			var rulesText = "<p>No rulings</p>";
+			if(rulesObject.data.length != 0){
+				rulesText = ""
+				for(var i = 0; i < rulesObject.data.length; i++){
+					rulesText = rulesText + "<p>" + rulesObject.data[i].comment + "</p>";
+				}
+			}
+			$("#rulings")[0].innerHTML = replaceSymbols(rulesText);
+			$("#rulingsWrapper")[0].classList.add("visible");
+			$("#rulingsWrapper")[0].classList.remove("invisible");
 		}
-		else{
-			rulesText = "<p>No rulings</p>";		
-		}
-		$("#rulings")[0].innerHTML = replaceSymbols(rulesText);
-		$("#rulingsWrapper")[0].classList.add("visible");
-		$("#rulingsWrapper")[0].classList.remove("invisible");
 	}
 	
 }
 
 function clearFields(){	
+	//clear all fields
 	$("#name")[0].innerHTML = "";
 	$("#mana_cost")[0].innerHTML = "";
 	$("#cardImage")[0].src = "";
@@ -118,94 +121,65 @@ function clearFields(){
 	
 }
 
-function loadDoc(){	
+function cardMarketDetails(cardObject){
+	//get cardmarket link from scryfall
+	$('#mcm_link')[0].href = cardObject.purchase_uris.magiccardmarket;
+	$('#mcm_link')[0].innerHTML = "on Magic Card Market";
+	
+	
+	//i'm not sure how this API call works. link here: https://www.mkmapi.eu/ws/documentation/API_2.0:Main_Page
+	
+	/*var myHeaders = new Headers();
+	myHeaders.set('appToken', 'NMb8kbp7HOQl92Vw');
+	myHeaders.set('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
+	myHeaders.set('accessToken', '')
+	myHeaders.set('accessSecret', '')*/
+	
+	
+	/*
+	var nonce = Math.floor((Math.random() * 10000000000000) + 1);
+	var baseString = "GET&" + encodeURIComponent("https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1") + "&";
+	var parameterString = "oauth_consumer_key=NMb8kbp7HOQl92Vw&oauth_nonce=" + nonce + "&oauth_signiture_method=HMAC-SHA1&oauth_timestamp=" + Date.now() + "&oauth_token=EegfnGYSkqPAEDvDrsKWQVo1L556njRg&oauth_version=1.0"
+	baseString = baseString + encodeURIComponent(parameterString);
+	var signingKey = encodeURIComponent("EegfnGYSkqPAEDvDrsKWQVo1L556njRg" + "&" + "")
+	
+	
 	var xhttp = new XMLHttpRequest();
-	var input = $("#myInput")[0].value;
-	if(input != "" && input != null){
-		
-		
+	xhttp.open("GET", "https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1");
+	xhttp.setRequestHeader('appToken', 'NMb8kbp7HOQl92Vw');
+	xhttp.setRequestHeader('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
+	xhttp.setRequestHeader('accessToken', '');
+	xhttp.setRequestHeader('accessSecret', '');
+	xhttp.setRequestHeader('timestamp', Date.now());
+	xhttp.setRequestHeader('nonce', '');
+	xhttp.setRequestHeader('Content-Type', 'application/json')
+	xhttp.send();
 	
-		xhttp.open("GET", "https://api.scryfall.com/cards/named?fuzzy=" + input, true);
-		xhttp.send();
-	}
-	else{
-  //if nothing in input box, clear all fields
-		clear();
-	}	
 	xhttp.onreadystatechange = function() {
-		
-		//if API returned an object, populate all fields
 		if (this.readyState == 4 && this.status == 200) {
-			var cardObject = JSON.parse(this.responseText);						
-			
-			$("#name")[0].innerHTML = cardObject.name;
-			var manaSymbols = cardObject.mana_cost;
-			$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
-			if($("#checkImage")[0].checked){
-				$("#cardImage")[0].src = cardObject.image_uris.art_crop;
-			}
-			else{
-				$("#cardImage")[0].src = "";
-			}
-			
-			$("#type_line")[0].innerHTML = cardObject.type_line;
-			var oracle = cardObject.oracle_text;
-			if(oracle != null){
-				$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
-			}
-			else{
-				$("#oracle_text")[0].innerHTML = "";			
-			}
-			if(cardObject.flavor_text != null){
-			$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
-			}
-			else{
-			$("#flavor_text")[0].innerHTML = "";
-			}
-			$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
-			$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
-			$("#scryfall_Link")[0].innerHTML = "on Scryfall";
-			var power;
-			var toughness;
-			if(cardObject.power && cardObject.toughness != null){
-				power = replaceSymbols(cardObject.power) + "/";
-				toughness = replaceSymbols(cardObject.toughness);
-				}
-			else{
-				power = "";
-				toughness = "";
-			}
-			$("#pt")[0].innerHTML = power + toughness;			
-			$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
-			if($("#checkBorder")[0].checked == true){
-				$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
-			}
-			cardMarketDetails(cardObject);
-			getRulings(cardObject);
-			
-			
+			var cardMarketObject = JSON.parse(this.responseText);
+			$("#lowestPrice")[0].innerHTML = "Lowest Price: €" + cardMarketObject.priceGuide.LOW;
+			$("#lowestPriceEx")[0].innerHTML = "Lowest Price (Excellent Condition+): €" + cardMarketObject.priceGuide.LOWEX;	//might need to put a "+" at end here. See when api authorized
+			$("#lowestPriceFoil")[0].innerHTML = "Lowest Foil Price: €" + cardMarketObject.priceGuide.LOWFOIL;
+			$("#averagePrice")[0].innerHTML = "Average Price: €" + cardMarketObject.priceGuide.AVG;
 		}
-		else if(this.status == 404){
-		//if no result found, print error
-			clear();
-			$("#name")[0].innerHTML = "Search not specific enough or card doesn't exist.";
+		else{
+			$("#lowestPrice")[0].innerHTML = "Cardmarket API did not return data";
+			$("#lowestPriceEx")[0].innerHTML = "";
+			$("#lowestPriceFoil")[0].innerHTML = "";
+			$("#averagePrice")[0].innerHTML = "";			
 		}
-		
-	};			
-	
+	}*/
 }
 
-
-//when enter pressed, emulate clicking the button
 $("#myInput").keyup(function(event) {
+	//when enter pressed, emulate clicking the request data button
 	event.preventDefault();
 	if (event.keyCode == 13) {
 		$("#btnRequestData")[0].click();
 	}
-});		
-	
-var divs = [];
-var index = 0;
+});	
+
 function autocompleteSetup(input){
 
 	var currentFocus;
@@ -239,7 +213,7 @@ function autocompleteSetup(input){
 			a.classList.add(index);
 			index++;
 
-      //when API request is returned, do this get elements of it and add it to a list
+			//when API request is returned, do this get elements of it and add it to a list
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 				
@@ -249,7 +223,7 @@ function autocompleteSetup(input){
 					divs.push(a.classList[0]);					
 					inputBox.parentNode.appendChild(a);					
 					
-          //if more than one autocomplete is displayed at once, remove all but the latest one
+					//if more than one autocomplete is displayed at once, remove all but the latest one
 					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
 							var currentDiv = $("." + divs[i])[0];						//i think this works now but keep an eye on it
@@ -285,7 +259,7 @@ function autocompleteSetup(input){
 	});
 
 
-//when the down, up or enter keys are pressed from the autocomplete menu they perform their relative actions
+	//when the down, up or enter keys are pressed from the autocomplete menu they perform their relative actions
 	$("#myInput").keydown(function(e){
 
 		var x = $("#" + this.id + "autocomplete-list")[0];
@@ -358,54 +332,76 @@ function autocompleteSetup(input){
 	});			
 }
 
-
-
-function cardMarketDetails(cardObject){
-	
-	$('#mcm_link')[0].href = cardObject.purchase_uris.magiccardmarket;
-	$('#mcm_link')[0].innerHTML = "on Magic Card Market";
-	
-	
-	
-	/*var myHeaders = new Headers();
-	myHeaders.set('appToken', 'NMb8kbp7HOQl92Vw');
-	myHeaders.set('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
-	myHeaders.set('accessToken', '')
-	myHeaders.set('accessSecret', '')*/
-	
-	
-	/*
-	var nonce = Math.floor((Math.random() * 10000000000000) + 1);
-	var baseString = "GET&" + encodeURIComponent("https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1") + "&";
-	var parameterString = "oauth_consumer_key=NMb8kbp7HOQl92Vw&oauth_nonce=" + nonce + "&oauth_signiture_method=HMAC-SHA1&oauth_timestamp=" + Date.now() + "&oauth_token=EegfnGYSkqPAEDvDrsKWQVo1L556njRg&oauth_version=1.0"
-	baseString = baseString + encodeURIComponent(parameterString);
-	var signingKey = encodeURIComponent("EegfnGYSkqPAEDvDrsKWQVo1L556njRg" + "&" + "")
-	
-	
+function loadDoc(){	
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", "https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1");
-	xhttp.setRequestHeader('appToken', 'NMb8kbp7HOQl92Vw');
-	xhttp.setRequestHeader('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
-	xhttp.setRequestHeader('accessToken', '');
-	xhttp.setRequestHeader('accessSecret', '');
-	xhttp.setRequestHeader('timestamp', Date.now());
-	xhttp.setRequestHeader('nonce', '');
-	xhttp.setRequestHeader('Content-Type', 'application/json')
-	xhttp.send();
-	
+	var input = $("#myInput")[0].value;
+	if(input != "" && input != null){	
+		xhttp.open("GET", "https://api.scryfall.com/cards/named?fuzzy=" + input, true);
+		xhttp.send();
+	}
+	else{
+	//if nothing in input box, clear all fields
+		clearFields();
+	}	
 	xhttp.onreadystatechange = function() {
+		
+		//if API returned an object, populate all fields
 		if (this.readyState == 4 && this.status == 200) {
-			var cardMarketObject = JSON.parse(this.responseText);
-			$("#lowestPrice")[0].innerHTML = "Lowest Price: €" + cardMarketObject.priceGuide.LOW;
-			$("#lowestPriceEx")[0].innerHTML = "Lowest Price (Excellent Condition+): €" + cardMarketObject.priceGuide.LOWEX;	//might need to put a "+" at end here. See when api authorized
-			$("#lowestPriceFoil")[0].innerHTML = "Lowest Foil Price: €" + cardMarketObject.priceGuide.LOWFOIL;
-			$("#averagePrice")[0].innerHTML = "Average Price: €" + cardMarketObject.priceGuide.AVG;
+			var cardObject = JSON.parse(this.responseText);						
+			
+			$("#name")[0].innerHTML = cardObject.name;
+			var manaSymbols = cardObject.mana_cost;
+			$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
+			if($("#checkImage")[0].checked){
+				$("#cardImage")[0].src = cardObject.image_uris.art_crop;
+			}
+			else{
+				$("#cardImage")[0].src = "";
+			}
+			
+			$("#type_line")[0].innerHTML = cardObject.type_line;
+			var oracle = cardObject.oracle_text;
+			if(oracle != null){
+				$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
+			}
+			else{
+				$("#oracle_text")[0].innerHTML = "";			
+			}
+			if(cardObject.flavor_text != null){
+			$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
+			}
+			else{
+			$("#flavor_text")[0].innerHTML = "";
+			}
+			$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
+			$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
+			$("#scryfall_Link")[0].innerHTML = "on Scryfall";
+			var power;
+			var toughness;
+			if(cardObject.power && cardObject.toughness != null){
+				power = replaceSymbols(cardObject.power) + "/";
+				toughness = replaceSymbols(cardObject.toughness);
+				}
+			else{
+				power = "";
+				toughness = "";
+			}
+			$("#pt")[0].innerHTML = power + toughness;			
+			$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+			if($("#checkBorder")[0].checked == true){
+				$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
+			}
+			cardMarketDetails(cardObject);
+			getRulings(cardObject);
+			
+			
 		}
-		else{
-			$("#lowestPrice")[0].innerHTML = "Cardmarket API did not return data";
-			$("#lowestPriceEx")[0].innerHTML = "";
-			$("#lowestPriceFoil")[0].innerHTML = "";
-			$("#averagePrice")[0].innerHTML = "";			
+		else if(this.status == 404){
+		//if no result found, print error
+			clearFields();
+			$("#name")[0].innerHTML = "Search not specific enough or card doesn't exist.";
 		}
-	}*/
+		
+	};			
+	
 }

@@ -593,9 +593,25 @@
 				text-align:left;
 			}
 			
-					
+			#divCheckboxes{
+				height: 38px;	
+				vertical-align: middle;
+			}
+			
+			#checkImage{
+				margin-left: 30px;
+			}
+			
+			#btnClear{
+				margin-left: 30px;
+			}
+			
+			#btnRequestData{
+				margin-left:30px;
+			}
 			
 			/* For Mobile */
+			
 			
 			#inputForm{
 				
@@ -617,25 +633,26 @@
 				border-width: 1px;
 				width: 100%;
 				background-color: #dfe6e9;
-			}
-			
-			
-			
-			
+				height: 38px;
+			}		
 
 			/* For Desktop */
-			@media screen and (min-width: 610px) {
+			@media screen and (min-width: 630px) {
+				
+				#divCheckboxes{
+				display: inline-block;
+				}
 			
-				.autocomplete{
-					
-					width: auto;
-					
+				#divButtons{
+					display: inline-block;
+				}
+			
+				.autocomplete{					
+					width: auto;					
 				}
 				
-				#inputForm{
-				
-				text-align: left;
-				
+				#inputForm{				
+				text-align: left;				
 				}
 
 				#myInput{

@@ -15,13 +15,15 @@
 			<div class="autocomplete">
 				<input id="myInput" type="search" value="">
 			</div>
-			<div style="display: inline-block;">
-				<input id="checkBorder" type="checkbox">Border
-				<input id="checkImage" type="checkbox" style="margin-left: 30px;">Image
+			<div id="divCheckboxes">
+				<input id="checkBorder" type="checkbox">
+				<label for="checkBorder">Border</label>
+				<input id="checkImage" type="checkbox">
+				<label for="checkImage">Image</label>
 			</div>
-			<div style="display: inline-block;">
-				<button class="btn btn-outline-secondary" id="btnRequestData" type="button" onclick="loadDoc()" style="margin-left: 30px;">Request Data</button>
-				<button class="btn btn-outline-secondary" id="btnClear" type="button" onclick="clearFields()" style="margin-left: 30px;">Clear</button>
+			<div id="divButtons">
+				<button class="btn btn-outline-secondary" id="btnRequestData" type="button" onclick="loadDoc()">Request Data</button>
+				<button class="btn btn-outline-secondary" id="btnClear" type="button" onclick="clearFields()">Clear</button>
 			</div>
 		</form>
 

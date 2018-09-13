@@ -1,5 +1,3 @@
 * Add deley on API requests so Scryfall doesn't hate me
-* Add cardmarket prices when API is approved
-* Fix how site looks on mobile
-* Fix JSON parse bug when getting rules API
-
+* Add cardmarket prices when I can be bothered or know how APIs work better
+* Fix how site looks on mobile & tablets
