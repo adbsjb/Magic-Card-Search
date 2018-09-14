@@ -1,3 +1,10 @@
+# v1.4.1 - Button edition
+Started to work on new search feature
+
+* Added buttons for new search feature
+
+
+
 # v1.4.1 - Bug fix edition
 Bug fixes
 
