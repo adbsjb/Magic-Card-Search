@@ -10,8 +10,12 @@
 		<title>Cardboard Tutor</title>
 	</head>
 	<body>
-		
-		<form id="inputForm" autocomplete="off">
+		<div class="btn-group" role="group" aria-label="Tabs">
+			<button id="btnNamed" type="button" class="btn btn-outline-dark active" onclick="namedSearch()">Named Search</button>
+			<button id="btnGeneral" type="button" class="btn btn-outline-dark" onclick="generalSearch()">General Search</button>
+		</div>
+		<form id="inputForm" autocomplete="off" class="visible">
+
 			<div class="autocomplete">
 				<input id="myInput" type="search" value="">
 			</div>
@@ -26,7 +30,7 @@
 				<button class="btn btn-outline-secondary" id="btnClear" type="button" onclick="clearFields()">Clear</button>
 			</div>
 		</form>
-
+		
 		<div id="cardWrapper" class="noBorder">
 		<p id="name"></p>
 		<p id="mana_cost"></p>

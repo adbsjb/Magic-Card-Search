@@ -180,6 +180,26 @@ $("#myInput").keyup(function(event) {
 	}
 });	
 
+function namedSearch(){
+	$('#inputForm')[0].classList.add('visible');
+	$('#inputForm')[0].classList.remove('invisible');
+  /*$('#generalInputForm')[0].classList.add('invisible');
+	$('#generalInputForm')[0].classList.remove('visible');*/
+	
+	$('#btnNamed')[0].classList.add('active');
+	$('#btnGeneral')[0].classList.remove('active');
+}
+
+function generalSearch(){
+	$('#inputForm')[0].classList.add('invisible');
+	$('#inputForm')[0].classList.remove('visible');	
+  /*$('#generalInputForm')[0].classList.add('visible');
+	$('#generalInputForm')[0].classList.remove('invisible');*/	
+	
+	$('#btnNamed')[0].classList.remove('active');
+	$('#btnGeneral')[0].classList.add('active');
+}
+
 function autocompleteSetup(input){
 
 	var currentFocus;
@@ -226,7 +246,7 @@ function autocompleteSetup(input){
 					//if more than one autocomplete is displayed at once, remove all but the latest one
 					if(divs.length > 1){
 						for(var i = 0; i < divs.length - 1; i++){
-							var currentDiv = $("." + divs[i])[0];						//i think this works now but keep an eye on it
+							var currentDiv = $("." + divs[i])[0];
 							currentDiv.outerHTML = "";
 							divs.shift();
 						}
