@@ -10,10 +10,10 @@
 		<title>Cardboard Tutor</title>
 	</head>
 	<body>
-		<div class="btn-group" role="group" aria-label="Tabs">
+	<!--<div class="btn-group" role="group" aria-label="Tabs">
 			<button id="btnNamed" type="button" class="btn btn-outline-dark active" onclick="namedSearch()">Named Search</button>
 			<button id="btnGeneral" type="button" class="btn btn-outline-dark" onclick="generalSearch()">General Search</button>
-		</div>
+		</div>-->
 		<form id="inputForm" autocomplete="off" class="visible">
 
 			<div class="autocomplete">
@@ -35,9 +35,16 @@
 		<p id="name"></p>
 		<p id="mana_cost"></p>
 		<div id="cardImageBox">
-			<img id="cardImage"></img>
+			<img id="cardImage">
 		</div>
 		<p id="type_line"></p>
+		<div id="setImageBox">
+			<img id="setImage">
+			<div id="setDropdown">
+			</div>
+		</div>
+		<br>
+		<br>
 		<p id="oracle_text"></p>
 		<p id="flavor_text"></p>
 		<p id="artist"></p>

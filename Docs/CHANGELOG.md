@@ -1,3 +1,10 @@
+#v1.5 - Sets Edition
+Added different sets functionality
+
+* Allowed choosing the sets of certain cards
+
+
+
 # v1.4.1 - Button edition
 Started to work on new search feature
 

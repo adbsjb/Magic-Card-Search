@@ -1,5 +1,5 @@
 //variable declerations
-var cardObjects;
+var currentCardObject;
 var userInput = $("#myInput")[0];
 var divs = [];
 var index = 0;
@@ -103,6 +103,9 @@ function clearFields(){
 	$("#mana_cost")[0].innerHTML = "";
 	$("#cardImage")[0].src = "";
 	$("#type_line")[0].innerHTML = "";
+	$("#setImage")[0].src = "";
+	$("#setImage")[0].title = "";
+	$("#setImage")[0].alt = "";
 	$("#oracle_text")[0].innerHTML = "";
 	$("#artist")[0].innerHTML = "";
 	$("#scryfall_Link")[0].innerHTML = "";
@@ -116,9 +119,9 @@ function clearFields(){
 	$("#averagePrice")[0].innerHTML = "";*/
 	$("#rulingsWrapper")[0].classList.remove("visible");
 	$("#rulingsWrapper")[0].classList.add("invisible");
-	$("#myInput")[0].value = "";
 	$("#mcm_link")[0].innerHTML = "";
-	
+	$("#setDropdown")[0].innerHTML = "";
+	$("#myInput")[0].value = "";
 }
 
 function cardMarketDetails(cardObject){
@@ -180,6 +183,14 @@ $("#myInput").keyup(function(event) {
 	}
 });	
 
+$('#checkBorder').click(function(event){
+	populateCard(currentCardObject);
+});
+
+$('#checkImage').click(function(event){
+	populateCard(currentCardObject);
+});
+
 function namedSearch(){
 	$('#inputForm')[0].classList.add('visible');
 	$('#inputForm')[0].classList.remove('invisible');
@@ -224,10 +235,7 @@ function autocompleteSetup(input){
 			if(input != ""){		
 				xhttp.open("GET", "https://api.scryfall.com/cards/autocomplete?q=" + input, true);
 				xhttp.send();
-			}
-			
-
-			
+			}		
 
 			a = document.createElement("DIV");
 			a.classList.add(index);
@@ -352,24 +360,51 @@ function autocompleteSetup(input){
 	});			
 }
 
-function loadDoc(){	
-	var xhttp = new XMLHttpRequest();
-	var input = $("#myInput")[0].value;
-	if(input != "" && input != null){	
-		xhttp.open("GET", "https://api.scryfall.com/cards/named?fuzzy=" + input, true);
-		xhttp.send();
-	}
-	else{
-	//if nothing in input box, clear all fields
-		clearFields();
-	}	
-	xhttp.onreadystatechange = function() {
-		
-		//if API returned an object, populate all fields
-		if (this.readyState == 4 && this.status == 200) {
-			var cardObject = JSON.parse(this.responseText);						
+function reprints(reprint){
+	$("#setDropdown")[0].innerHTML = "";
+	for(var i = 0; i < reprint.data.length; i++){
+		if(reprint.data[i].lang == "en"){
+			var a = document.createElement("DIV");
+			a.setAttribute("id", i + "reprintDiv");
+			a.setAttribute("class", "dropdownItem");
+			a.classList.add(i);
+			$('#setDropdown')[0].appendChild(a)
+			var b = document.createElement("IMG");
+			b.setAttribute("id", i + "reprintImage");
+			b.classList.add("dropdownImage");
+			b.classList.add(i);
+			a.appendChild(b);	
+			getSetIcon(reprint.data[i], "#" + i + "reprintImage");
 			
-			$("#name")[0].innerHTML = cardObject.name;
+			$("#" + i + "reprintDiv").click(function(){
+				populateCard(reprint.data[this.classList[1]]);
+			});
+				
+			
+		}
+		
+	}
+}
+
+function getSetIcon(cardObject, imageDest){
+	var setHttp = new XMLHttpRequest();
+			setHttp.open("GET", cardObject.set_uri, true);
+			setHttp.send();
+			
+			setHttp.onreadystatechange = function(){
+				if (this.readyState == 4 && this.status == 200) {
+					setObject = JSON.parse(this.responseText);	
+					$(imageDest)[0].src = setObject.icon_svg_uri;
+					$(imageDest)[0].title = setObject.name + " (" + setObject.code.toUpperCase() + ")";
+					$(imageDest)[0].alt = setObject.code.toUpperCase();		
+										
+				}
+			}
+}
+
+
+function populateCard(cardObject){
+	$("#name")[0].innerHTML = cardObject.name;
 			var manaSymbols = cardObject.mana_cost;
 			$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
 			if($("#checkImage")[0].checked){
@@ -413,7 +448,46 @@ function loadDoc(){
 			}
 			cardMarketDetails(cardObject);
 			getRulings(cardObject);
+			getSetIcon(cardObject, '#setImage');	
+			currentCardObject = cardObject;			
+}
+
+
+function loadDoc(){	
+	
+	var xhttp = new XMLHttpRequest();
+	var input = $("#myInput")[0].value;
+	if(input != "" && input != null){	
+		xhttp.open("GET", "https://api.scryfall.com/cards/named?fuzzy=" + input, true);
+		xhttp.send();
+	}
+	else{
+	//if nothing in input box, clear all fields
+		clearFields();
+	}	
+	xhttp.onreadystatechange = function() {
+		
+		//if API returned an object, populate all fields
+		if (this.readyState == 4 && this.status == 200) {
+			var cardObject = JSON.parse(this.responseText);	
+			$("#setDropdown")[0].innerHTML = "";			
 			
+			if(cardObject.reprint == true){
+				var reprintHttp = new XMLHttpRequest();
+				if(input != ""){		
+					reprintHttp.open("GET", cardObject.prints_search_uri, true);
+					reprintHttp.send();
+					
+					reprintHttp.onreadystatechange = function(){
+						if (this.readyState == 4 && this.status == 200) {
+							var reprint = JSON.parse(this.responseText);
+							reprints(reprint);
+						}
+					}
+				}
+			}
+
+			populateCard(cardObject);
 			
 		}
 		else if(this.status == 404){
