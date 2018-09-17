@@ -122,6 +122,8 @@ function clearFields(){
 	$("#mcm_link")[0].innerHTML = "";
 	$("#setDropdown")[0].innerHTML = "";
 	$("#myInput")[0].value = "";
+	$("#cardWrapper")[0].classList.add("invisible");
+	$("#cardWrapper")[0].classList.remove("visible");
 }
 
 function cardMarketDetails(cardObject){
@@ -449,7 +451,9 @@ function populateCard(cardObject){
 			cardMarketDetails(cardObject);
 			getRulings(cardObject);
 			getSetIcon(cardObject, '#setImage');	
-			currentCardObject = cardObject;			
+			currentCardObject = cardObject;		
+			$("#cardWrapper")[0].classList.add("visible");
+			$("#cardWrapper")[0].classList.remove("invisible");			
 }
 
 
