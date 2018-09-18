@@ -3,7 +3,9 @@ var currentCardObject;
 var userInput = $("#myInput")[0];
 var divs = [];
 var index = 0;
+var allSets;
 autocompleteSetup(userInput);
+getSets();
 
 function replaceSymbols(newString){
 	//replaces all references to symbols with actual symbols in given string
@@ -124,6 +126,7 @@ function clearFields(){
 	$("#myInput")[0].value = "";
 	$("#cardWrapper")[0].classList.add("invisible");
 	$("#cardWrapper")[0].classList.remove("visible");
+	currentCardObject = "";
 }
 
 function cardMarketDetails(cardObject){
@@ -186,18 +189,22 @@ $("#myInput").keyup(function(event) {
 });	
 
 $('#checkBorder').click(function(event){
-	populateCard(currentCardObject);
+	if(currentCardObject != ""){
+		populateCard(currentCardObject);
+	}
 });
 
 $('#checkImage').click(function(event){
-	populateCard(currentCardObject);
+	if(currentCardObject != ""){
+		populateCard(currentCardObject);
+	}
 });
 
 function namedSearch(){
 	$('#inputForm')[0].classList.add('visible');
 	$('#inputForm')[0].classList.remove('invisible');
-  /*$('#generalInputForm')[0].classList.add('invisible');
-	$('#generalInputForm')[0].classList.remove('visible');*/
+	$('#generalInputForm')[0].classList.add('invisible');
+	$('#generalInputForm')[0].classList.remove('visible');
 	
 	$('#btnNamed')[0].classList.add('active');
 	$('#btnGeneral')[0].classList.remove('active');
@@ -206,8 +213,8 @@ function namedSearch(){
 function generalSearch(){
 	$('#inputForm')[0].classList.add('invisible');
 	$('#inputForm')[0].classList.remove('visible');	
-  /*$('#generalInputForm')[0].classList.add('visible');
-	$('#generalInputForm')[0].classList.remove('invisible');*/	
+	$('#generalInputForm')[0].classList.add('visible');
+	$('#generalInputForm')[0].classList.remove('invisible');
 	
 	$('#btnNamed')[0].classList.remove('active');
 	$('#btnGeneral')[0].classList.add('active');
@@ -362,7 +369,41 @@ function autocompleteSetup(input){
 	});			
 }
 
+function getSets(){
+	//sets up set array for this session
+	var setHttp = new XMLHttpRequest();
+			setHttp.open("GET", "https://api.scryfall.com/sets", true);
+			setHttp.send();
+			
+			setHttp.onreadystatechange = function(){
+				if (this.readyState == 4 && this.status == 200) {
+					allSets = JSON.parse(this.responseText);
+					allSets = allSets.data;
+				}
+			}	
+}
+
 function reprints(reprint){
+	//sorts array in date order
+	reprint.data.sort(function(a, b){
+		for(var i = 0; i < allSets.length; i++){	
+			if(allSets[i].code == a.set){
+				date1 = allSets[i].released_at;
+				break;
+			}		
+		}		
+		for(var i = 0; i < allSets.length; i++){	
+			if(allSets[i].code == b.set){
+				date2 = allSets[i].released_at;
+				break;
+			}		
+		}
+		if (date1 < date2) {return 1;}
+		if (date1 > date2) {return -1;}
+		return 0;
+	});
+	
+	//creates the dropdown menu with images
 	$("#setDropdown")[0].innerHTML = "";
 	for(var i = 0; i < reprint.data.length; i++){
 		if(reprint.data[i].lang == "en"){
@@ -374,36 +415,52 @@ function reprints(reprint){
 			var b = document.createElement("IMG");
 			b.setAttribute("id", i + "reprintImage");
 			b.classList.add("dropdownImage");
-			b.classList.add(i);
+			b.classList.add("svg");
 			a.appendChild(b);	
 			getSetIcon(reprint.data[i], "#" + i + "reprintImage");
 			
 			$("#" + i + "reprintDiv").click(function(){
 				populateCard(reprint.data[this.classList[1]]);
-			});
-				
-			
-		}
-		
+			});		
+		}		
 	}
 }
 
 function getSetIcon(cardObject, imageDest){
-	var setHttp = new XMLHttpRequest();
-			setHttp.open("GET", cardObject.set_uri, true);
-			setHttp.send();
-			
-			setHttp.onreadystatechange = function(){
-				if (this.readyState == 4 && this.status == 200) {
-					setObject = JSON.parse(this.responseText);	
-					$(imageDest)[0].src = setObject.icon_svg_uri;
-					$(imageDest)[0].title = setObject.name + " (" + setObject.code.toUpperCase() + ")";
-					$(imageDest)[0].alt = setObject.code.toUpperCase();		
-										
-				}
-			}
+	//puts set icon for specified object into specified location
+	for(var i = 0; i < allSets.length; i++){
+		var test = $(imageDest)[0];
+			$(imageDest)[0].src = allSets[i].icon_svg_uri;
+		if(allSets[i].code == cardObject.set){
+			$(imageDest)[0].title = allSets[i].name + " (" + allSets[i].code.toUpperCase() + ")";
+			$(imageDest)[0].alt = allSets[i].code.toUpperCase();
+			break;
+		}
+	}
 }
 
+function getRarity(cardObject, imageDest){
+	if(cardObject.rarity == 'uncommon'){
+		$(imageDest)[0].setAttribute('class', 'uncommon');
+	}
+	else if(cardObject.rarity == 'rare'){
+		$(imageDest)[0].setAttribute('class', 'rare');
+	}
+	else if(cardObject.rarity == 'mythic'){
+		$(imageDest)[0].setAttribute('class', 'mythic');
+	}
+	else if(cardObject.rarity == 'timeshifted'){
+		$(imageDest)[0].setAttribute('class', 'timeshifted');
+	}
+	else if(cardObject.rarity == 'masterpiece'){
+		$(imageDest)[0].setAttribute('class', 'masterpiece');
+	}
+	else{
+		$(imageDest)[0].setAttribute('class', 'common');
+	}
+	
+	
+}
 
 function populateCard(cardObject){
 	$("#name")[0].innerHTML = cardObject.name;
@@ -451,14 +508,14 @@ function populateCard(cardObject){
 			cardMarketDetails(cardObject);
 			getRulings(cardObject);
 			getSetIcon(cardObject, '#setImage');	
+			getRarity(cardObject, '#setImageBox');
 			currentCardObject = cardObject;		
 			$("#cardWrapper")[0].classList.add("visible");
-			$("#cardWrapper")[0].classList.remove("invisible");			
+			$("#cardWrapper")[0].classList.remove("invisible");
 }
 
-
 function loadDoc(){	
-	
+	//Use API to get card object
 	var xhttp = new XMLHttpRequest();
 	var input = $("#myInput")[0].value;
 	if(input != "" && input != null){	

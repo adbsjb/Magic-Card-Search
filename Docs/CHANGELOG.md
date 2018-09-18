@@ -1,4 +1,11 @@
-#v1.5 - Sets Edition
+# v1.5.1 - Mythic edition
+Added card rarity and other fixes
+
+* Streamlined the way in which calls set api to reduce load times
+* Added rarity of cards even if it looks horrible
+
+
+# v1.5 - Sets Edition
 Added different sets functionality
 
 * Allowed choosing the sets of certain cards

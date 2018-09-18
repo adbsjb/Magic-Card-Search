@@ -542,6 +542,40 @@
 				color: black;
 			}
 			
+			.common{
+				background-color: transparent;
+			}
+			
+			.uncommon{
+				background-color: #7B7B7C;
+			}
+			
+			.rare{
+				background-color: #DCBA69;
+			}
+			
+			.mythic{
+				background-color: #C26B0B;
+			}
+			
+			.timeshifted{
+				background-color: #B890BE;
+			}
+			
+			.masterpiece{
+				background-color: #A5D9EB;
+			}
+			
+			svg{
+				color: red;
+			}
+			
+			.setIcon{
+				width: 180px;
+				height: 180px;
+				fill: #DCBA69;
+			}
+			
 			body{
 				background-color: #ecf0f1;
 				padding: 10px;
