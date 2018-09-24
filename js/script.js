@@ -200,22 +200,29 @@ $('#checkImage').click(function(event){
 	}
 });
 
+
 function namedSearch(){
-	$('#inputForm')[0].classList.add('visible');
-	$('#inputForm')[0].classList.remove('invisible');
-	$('#generalInputForm')[0].classList.add('invisible');
-	$('#generalInputForm')[0].classList.remove('visible');
-	
+	$('#searchWrapper')[0].classList.remove('invisible');
+	$('#searchWrapper')[0].classList.add('visible');
+	$('#inputForm')[0].classList.add('show');
+	$('#inputForm')[0].classList.remove('hide');
+	$('#generalInputForm')[0].classList.add('hide');
+	$('#generalInputForm')[0].classList.remove('show');
+	$('#cardWrapper')[0].classList.add('show');
+	$('#cardWrapper')[0].classList.remove('hide');	
 	$('#btnNamed')[0].classList.add('active');
 	$('#btnGeneral')[0].classList.remove('active');
 }
 
 function generalSearch(){
-	$('#inputForm')[0].classList.add('invisible');
-	$('#inputForm')[0].classList.remove('visible');	
-	$('#generalInputForm')[0].classList.add('visible');
-	$('#generalInputForm')[0].classList.remove('invisible');
-	
+	$('#searchWrapper')[0].classList.add('visible');
+	$('#searchWrapper')[0].classList.remove('invisible');
+	$('#inputForm')[0].classList.add('hide');
+	$('#inputForm')[0].classList.remove('show');	
+	$('#generalInputForm')[0].classList.add('show');
+	$('#generalInputForm')[0].classList.remove('hide');
+	$('#cardWrapper')[0].classList.add('hide');
+	$('#cardWrapper')[0].classList.remove('show');	
 	$('#btnNamed')[0].classList.remove('active');
 	$('#btnGeneral')[0].classList.add('active');
 }

@@ -10,11 +10,11 @@
 		<title>Cardboard Tutor</title>
 	</head>
 	<body>
-	<!--<div class="btn-group" role="group" aria-label="Tabs">
-			<button id="btnNamed" type="button" class="btn btn-outline-dark active" onclick="namedSearch()">Named Search</button>
-			<button id="btnGeneral" type="button" class="btn btn-outline-dark" onclick="generalSearch()">General Search</button>
-		</div>-->
-		<form id="inputForm" autocomplete="off" class="visible">
+	<div style="margin:10px;" class="btn-group" role="group" aria-label="Tabs">
+			<button id="btnNamed" type="button" class="btn btn-outline-dark active" onclick="namedSearch()" data-toggle="collapse" data-target="#searchCollapse" aria-expanded="false" aria-controls="searchCollapse">Named Search</button>
+			<button id="btnGeneral" type="button" class="btn btn-outline-dark" onclick="generalSearch()" data-toggle="collapse" data-target="#searchCollapse" aria-expanded="false" aria-controls="searchCollapse">General Search</button>
+		</div>
+		<form id="inputForm" autocomplete="off" class="show">
 
 			<div class="autocomplete">
 				<input id="myInput" type="search" value="">
@@ -31,7 +31,33 @@
 			</div>
 		</form>
 		
-		<div id="cardWrapper" class="noBorder invisible">
+		<form id="generalInputForm" autocomplete="off" class="hide">
+
+			<div class="autocomplete">
+				<input id="myInput" type="search" value="">
+			</div>
+			<div id="divCheckboxes">
+				<input id="checkBorder" type="checkbox">
+				<label for="checkBorder">Border</label>
+				<input id="checkImage" type="checkbox">
+				<label for="checkImage">Image</label>
+			</div>
+			<div id="divButtons">
+				<button class="btn btn-outline-secondary" id="btnRequestData" type="button" onclick="loadDoc()">Request Data</button>
+				<button class="btn btn-outline-secondary" id="btnClear" type="button" onclick="clearFields()">Clear</button>
+			</div>
+		</form>
+		
+		<div id="searchWrapper" class="invisible">
+			<div class"collapse">
+				<div id="searchCollapse" class="card card-body">
+					testing
+				</div>					
+			</div>
+		
+		</div>
+		
+		<div id="cardWrapper" class="noBorder show invisible">
 		<p id="name"></p>
 		<p id="mana_cost"></p>
 		<div id="cardImageBox">
@@ -71,7 +97,6 @@
 				</p>
 				<div class="collapse" id="collapseRulings">
 					<div id="rulings" class="card card-body">
-						testing
 					</div>
 				</div>
 			</div>

@@ -509,6 +509,14 @@
 
 /*****************************************End of Symbols*******************************/
 
+			.hide{
+				display: none;
+			}
+			
+			.show{
+				display: block;
+			}
+			
 			
 			.autocomplete{
 				position:relative;
@@ -648,6 +656,10 @@
 				padding:3px;
 				
 				
+			}
+			
+			#searchWrapper{
+				background-color: white;
 			}
 			
 			.dropdownItem{
