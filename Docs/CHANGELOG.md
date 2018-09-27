@@ -1,8 +1,16 @@
+# v1.5.2 - General search start edition
+Started working on a general search that uses Scryfall's search syntax
+
+* Search syntax: https://scryfall.com/docs/reference
+
+
+
 # v1.5.1 - Mythic edition
 Added card rarity and other fixes
 
 * Streamlined the way in which calls set api to reduce load times
 * Added rarity of cards even if it looks horrible
+
 
 
 # v1.5 - Sets Edition

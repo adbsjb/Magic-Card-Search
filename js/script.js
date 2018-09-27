@@ -78,25 +78,26 @@ function replaceSymbols(newString){
 
 function getRulings(cardObject){
 	//get rulings for a card if it has any
-	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", cardObject.rulings_uri, true);
-	xhttp.send();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var rulesObject = JSON.parse(this.responseText);
-			var rulesText = "<p>No rulings</p>";
-			if(rulesObject.data.length != 0){
-				rulesText = ""
-				for(var i = 0; i < rulesObject.data.length; i++){
-					rulesText = rulesText + "<p>" + rulesObject.data[i].comment + "</p>";
+	if(cardObject.rulings_uri != null){	
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", cardObject.rulings_uri, true);
+		xhttp.send();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var rulesObject = JSON.parse(this.responseText);
+				var rulesText = "<p>No rulings</p>";
+				if(rulesObject.data.length != 0){
+					rulesText = ""
+					for(var i = 0; i < rulesObject.data.length; i++){
+						rulesText = rulesText + "<p>" + rulesObject.data[i].comment + "</p>";
+					}
 				}
+				$("#rulings")[0].innerHTML = replaceSymbols(rulesText);
+				$("#rulingsWrapper")[0].classList.add("visible");
+				$("#rulingsWrapper")[0].classList.remove("invisible");
 			}
-			$("#rulings")[0].innerHTML = replaceSymbols(rulesText);
-			$("#rulingsWrapper")[0].classList.add("visible");
-			$("#rulingsWrapper")[0].classList.remove("invisible");
 		}
 	}
-	
 }
 
 function clearFields(){	
@@ -127,13 +128,17 @@ function clearFields(){
 	$("#cardWrapper")[0].classList.add("invisible");
 	$("#cardWrapper")[0].classList.remove("visible");
 	currentCardObject = "";
+	$('#collapseRulings').collapse('hide');
+	$("#generalSearchResults")[0].innerHTML = "";
+	$("#generalInput")[0].value = "";
 }
 
 function cardMarketDetails(cardObject){
 	//get cardmarket link from scryfall
-	$('#mcm_link')[0].href = cardObject.purchase_uris.magiccardmarket;
-	$('#mcm_link')[0].innerHTML = "on Magic Card Market";
-	
+	if(cardObject.purchase_uris != null){
+		$('#mcm_link')[0].href = cardObject.purchase_uris.magiccardmarket;
+		$('#mcm_link')[0].innerHTML = "on Magic Card Market";
+	}
 	
 	//i'm not sure how this API call works. link here: https://www.mkmapi.eu/ws/documentation/API_2.0:Main_Page
 	
@@ -180,13 +185,26 @@ function cardMarketDetails(cardObject){
 	}*/
 }
 
+
+$("#generalInput").keyup(function(e) {
+	//when enter pressed, emulate clicking the request data button
+	e.preventDefault();
+	if(e.keyCode == 13) {
+		$("#btnLoadGeneralSearch")[0].click();
+	}
+});	
+
+
+
 $("#myInput").keyup(function(event) {
 	//when enter pressed, emulate clicking the request data button
 	event.preventDefault();
-	if (event.keyCode == 13) {
+	if(event.keyCode == 13) {
 		$("#btnRequestData")[0].click();
 	}
 });	
+
+
 
 $('#checkBorder').click(function(event){
 	if(currentCardObject != ""){
@@ -200,29 +218,26 @@ $('#checkImage').click(function(event){
 	}
 });
 
-
 function namedSearch(){
-	$('#searchWrapper')[0].classList.remove('invisible');
-	$('#searchWrapper')[0].classList.add('visible');
+	$('#searchCollapse').collapse('hide');
 	$('#inputForm')[0].classList.add('show');
 	$('#inputForm')[0].classList.remove('hide');
 	$('#generalInputForm')[0].classList.add('hide');
 	$('#generalInputForm')[0].classList.remove('show');
-	$('#cardWrapper')[0].classList.add('show');
-	$('#cardWrapper')[0].classList.remove('hide');	
+	$('#namedWrapper')[0].classList.add('show');
+	$('#namedWrapper')[0].classList.remove('hide');	
 	$('#btnNamed')[0].classList.add('active');
 	$('#btnGeneral')[0].classList.remove('active');
 }
 
 function generalSearch(){
-	$('#searchWrapper')[0].classList.add('visible');
-	$('#searchWrapper')[0].classList.remove('invisible');
+	$('#searchCollapse').collapse('show');
 	$('#inputForm')[0].classList.add('hide');
 	$('#inputForm')[0].classList.remove('show');	
 	$('#generalInputForm')[0].classList.add('show');
 	$('#generalInputForm')[0].classList.remove('hide');
-	$('#cardWrapper')[0].classList.add('hide');
-	$('#cardWrapper')[0].classList.remove('show');	
+	$('#namedWrapper')[0].classList.add('hide');
+	$('#namedWrapper')[0].classList.remove('show');	
 	$('#btnNamed')[0].classList.remove('active');
 	$('#btnGeneral')[0].classList.add('active');
 }
@@ -471,54 +486,54 @@ function getRarity(cardObject, imageDest){
 
 function populateCard(cardObject){
 	$("#name")[0].innerHTML = cardObject.name;
-			var manaSymbols = cardObject.mana_cost;
-			$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
-			if($("#checkImage")[0].checked){
-				$("#cardImage")[0].src = cardObject.image_uris.art_crop;
-			}
-			else{
-				$("#cardImage")[0].src = "";
-			}
-			
-			$("#type_line")[0].innerHTML = cardObject.type_line;
-			var oracle = cardObject.oracle_text;
-			if(oracle != null){
-				$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
-			}
-			else{
-				$("#oracle_text")[0].innerHTML = "";			
-			}
-			if(cardObject.flavor_text != null){
-			$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
-			}
-			else{
-			$("#flavor_text")[0].innerHTML = "";
-			}
-			$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
-			$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
-			$("#scryfall_Link")[0].innerHTML = "on Scryfall";
-			var power;
-			var toughness;
-			if(cardObject.power && cardObject.toughness != null){
-				power = replaceSymbols(cardObject.power) + "/";
-				toughness = replaceSymbols(cardObject.toughness);
-				}
-			else{
-				power = "";
-				toughness = "";
-			}
-			$("#pt")[0].innerHTML = power + toughness;			
-			$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
-			if($("#checkBorder")[0].checked == true){
-				$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
-			}
-			cardMarketDetails(cardObject);
-			getRulings(cardObject);
-			getSetIcon(cardObject, '#setImage');	
-			getRarity(cardObject, '#setImageBox');
-			currentCardObject = cardObject;		
-			$("#cardWrapper")[0].classList.add("visible");
-			$("#cardWrapper")[0].classList.remove("invisible");
+	var manaSymbols = cardObject.mana_cost;
+	$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
+	if($("#checkImage")[0].checked){
+		$("#cardImage")[0].src = cardObject.image_uris.art_crop;
+	}
+	else{
+		$("#cardImage")[0].src = "";
+	}
+	
+	$("#type_line")[0].innerHTML = cardObject.type_line;
+	var oracle = cardObject.oracle_text;
+	if(oracle != null){
+		$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
+	}
+	else{
+		$("#oracle_text")[0].innerHTML = "";			
+	}
+	if(cardObject.flavor_text != null){
+	$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
+	}
+	else{
+	$("#flavor_text")[0].innerHTML = "";
+	}
+	$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
+	$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
+	$("#scryfall_Link")[0].innerHTML = "on Scryfall";
+	var power;
+	var toughness;
+	if(cardObject.power && cardObject.toughness != null){
+		power = replaceSymbols(cardObject.power) + "/";
+		toughness = replaceSymbols(cardObject.toughness);
+		}
+	else{
+		power = "";
+		toughness = "";
+	}
+	$("#pt")[0].innerHTML = power + toughness;			
+	$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+	if($("#checkBorder")[0].checked == true){
+		$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
+	}
+	cardMarketDetails(cardObject);
+	getRulings(cardObject);
+	getSetIcon(cardObject, '#setImage');	
+	getRarity(cardObject, '#setImageBox');
+	currentCardObject = cardObject;		
+	$("#cardWrapper")[0].classList.add("visible");
+	$("#cardWrapper")[0].classList.remove("invisible");
 }
 
 function loadDoc(){	
@@ -554,7 +569,6 @@ function loadDoc(){
 					}
 				}
 			}
-
 			populateCard(cardObject);
 			
 		}
@@ -566,4 +580,32 @@ function loadDoc(){
 		
 	};			
 	
+}
+
+function loadGeneralSearch(){
+	var xhttp = new XMLHttpRequest();
+	var input = $("#generalInput")[0].value;
+	if(input != "" && input != null){
+		xhttp.open("GET", "https://api.scryfall.com/cards/search?q=" + input, true);
+		xhttp.send();
+	}
+	else{
+	//if nothing in input box, clear all fields
+		clearFields();
+	}	
+	xhttp.onreadystatechange = function() {
+		
+		//if API returned an object, populate all fields
+		if (this.readyState == 4 && this.status == 200) {
+			var cardListObject = JSON.parse(this.responseText).data;	
+			for(var i = 0; i < cardListObject.length; i++){
+				var a = document.createElement("DIV");
+				a.setAttribute("class", "cardSearch");
+				a.setAttribute("id", i);
+				$('#generalSearchResults')[0].appendChild(a);
+				$('#' + i)[0].innerHTML = cardListObject[i].name;
+				
+			}
+		}
+	}
 }
