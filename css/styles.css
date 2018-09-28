@@ -727,6 +727,17 @@
 				margin-left:30px;
 			}
 			
+			#licencesWrapper{
+				position:relative;
+				width: 100%;
+			}
+			
+			#licences{
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+			}
+			
 			/* For Mobile */
 			
 			

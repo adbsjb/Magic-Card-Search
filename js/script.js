@@ -131,6 +131,7 @@ function clearFields(){
 	$('#collapseRulings').collapse('hide');
 	$("#generalSearchResults")[0].innerHTML = "";
 	$("#generalInput")[0].value = "";
+	$("#averagePrice")[0].innerHTML = "";
 }
 
 function cardMarketDetails(cardObject){
@@ -138,6 +139,13 @@ function cardMarketDetails(cardObject){
 	if(cardObject.purchase_uris != null){
 		$('#mcm_link')[0].href = cardObject.purchase_uris.magiccardmarket;
 		$('#mcm_link')[0].innerHTML = "on Magic Card Market";
+	}
+	
+	if(cardObject.eur != null){
+		$('#averagePrice')[0].innerHTML = "Average Price: €" + 	cardObject.eur;			
+	}
+	else{
+		$('#averagePrice')[0].innerHTML = "";
 	}
 	
 	//i'm not sure how this API call works. link here: https://www.mkmapi.eu/ws/documentation/API_2.0:Main_Page
@@ -185,7 +193,6 @@ function cardMarketDetails(cardObject){
 	}*/
 }
 
-
 $("#generalInput").keyup(function(e) {
 	//when enter pressed, emulate clicking the request data button
 	e.preventDefault();
@@ -194,8 +201,6 @@ $("#generalInput").keyup(function(e) {
 	}
 });	
 
-
-
 $("#myInput").keyup(function(event) {
 	//when enter pressed, emulate clicking the request data button
 	event.preventDefault();
@@ -203,8 +208,6 @@ $("#myInput").keyup(function(event) {
 		$("#btnRequestData")[0].click();
 	}
 });	
-
-
 
 $('#checkBorder').click(function(event){
 	if(currentCardObject != ""){
@@ -547,7 +550,7 @@ function loadDoc(){
 	else{
 	//if nothing in input box, clear all fields
 		clearFields();
-	}	
+	}
 	xhttp.onreadystatechange = function() {
 		
 		//if API returned an object, populate all fields
