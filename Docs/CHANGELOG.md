@@ -1,3 +1,12 @@
+# v1.5.3 - Favicon Edition
+Added a favicon and fixed some bugs
+
+* Added favicon from https://www.flaticon.com
+* Fixed pressing enter on general search
+* Clicking on cards in general search now opens it in named search
+
+
+
 # v1.5.2 - General search start edition
 Started working on a general search that uses Scryfall's search syntax
 

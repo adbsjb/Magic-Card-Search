@@ -14,6 +14,8 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{B}/g, '<span class="blackMana"></span>');
 	newString = newString.replace(/{R}/g, '<span class="redMana"></span>');
 	newString = newString.replace(/{G}/g, '<span class="greenMana"></span>');
+	newString = newString.replace(/{S}/g, '<span class="snowMana"></span>');
+	newString = newString.replace(/{E}/g, '<span class="energy"></span>');
 	newString = newString.replace(/{C}/g, '<span class="colourlessMana"></span>');
 	newString = newString.replace(/{HW}/g, '<span class="hwhiteMana"></span>');
 	newString = newString.replace(/{HU}/g, '<span class="hblueMana"></span>');
@@ -193,10 +195,10 @@ function cardMarketDetails(cardObject){
 	}*/
 }
 
-$("#generalInput").keyup(function(e) {
+$("#generalInput").keyup(function(event) {
 	//when enter pressed, emulate clicking the request data button
-	e.preventDefault();
-	if(e.keyCode == 13) {
+	event.preventDefault();
+	if(event.keyCode == 13) {
 		$("#btnLoadGeneralSearch")[0].click();
 	}
 });	
@@ -572,8 +574,7 @@ function loadDoc(){
 					}
 				}
 			}
-			populateCard(cardObject);
-			
+			populateCard(cardObject);			
 		}
 		else if(this.status == 404){
 		//if no result found, print error
@@ -583,6 +584,12 @@ function loadDoc(){
 		
 	};			
 	
+}
+
+function passCard(cardName){
+	$("#myInput")[0].value = cardName;
+	$("#btnNamed").click();
+	$("#btnRequestData").click();
 }
 
 function loadGeneralSearch(){
@@ -600,14 +607,27 @@ function loadGeneralSearch(){
 		
 		//if API returned an object, populate all fields
 		if (this.readyState == 4 && this.status == 200) {
+			$('#generalSearchResults')[0].innerHTML = "";
 			var cardListObject = JSON.parse(this.responseText).data;	
 			for(var i = 0; i < cardListObject.length; i++){
-				var a = document.createElement("DIV");
+				var a = document.createElement("A");
 				a.setAttribute("class", "cardSearch");
 				a.setAttribute("id", i);
+				a.setAttribute("href", "#");
+				a.setAttribute("onClick", "passCard(\"" + cardListObject[i].name + "\")");
 				$('#generalSearchResults')[0].appendChild(a);
 				$('#' + i)[0].innerHTML = cardListObject[i].name;
 				
+			}
+		}
+		else if(this.readyState == 4 && this.status == 404){
+			var error = JSON.parse(this.response);
+			if(error.code == "not_found"){
+				$('#generalSearchResults')[0].innerHTML = "";
+				var a = document.createElement("DIV");
+				a.setAttribute("class", "cardSearch");
+				$('#generalSearchResults')[0].appendChild(a);
+				$('.cardSearch')[0].innerHTML = "Your query didn’t match any cards. Adjust your search terms or refer to the syntax guide at https://scryfall.com/docs/reference";
 			}
 		}
 	}

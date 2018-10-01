@@ -115,6 +115,22 @@
 				display: inline-block;
 			}
 			
+			.snowMana{
+				background-image:url("../symbols/s.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
+			.energy{
+				background-image:url("../symbols/e.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+			
 			.colourlessMana{
 				background-image:url("../symbols/C.svg");
 				background-size: 15px;
@@ -595,7 +611,7 @@
 			}
 			
 			#cardWrapper{
-					width:325px;
+					width:350px;
 					height:auto;
 					padding: 10px;
 					margin: 10px;
@@ -638,7 +654,7 @@
 				display: inline-block;
 				float: right;
 				width:20px;
-				height:20px;
+				height:auto;
 				position: relative;
 			}
 			
@@ -670,10 +686,6 @@
 			.dropdownItem{
 				min-height: 20px;
 				width: 20px;
-				/*padding-right: 1px;
-				padding-left: 1px;
-				padding-bottom: 3px;
-				padding-top: 3px;*/
 				top: 100%;
 				left: 0;
 				right: 0;
@@ -729,12 +741,11 @@
 			
 			#licencesWrapper{
 				position:relative;
+				bottom: 0;
 				width: 100%;
 			}
 			
 			#licences{
-				position: absolute;
-				bottom: 0;
 				width: 100%;
 			}
 			
