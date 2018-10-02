@@ -567,7 +567,7 @@
 			}
 			
 			.common{
-				background-color: transparent;
+				background-color: #000000;
 			}
 			
 			.uncommon{
@@ -590,19 +590,25 @@
 				background-color: #A5D9EB;
 			}
 			
-			svg{
-				color: red;
+			.cardSearchDiv{
+				width: 100%;
 			}
 			
 			.setIcon{
 				width: 180px;
 				height: 180px;
-				fill: #DCBA69;
 			}
 			
 			body{
 				background-color: #ecf0f1;
 				padding: 10px;
+			}
+			
+			#test{
+				background-color:#DCBA69;
+				width:20px;
+				height:20px;
+				-webkit-mask: url('https://img.scryfall.com/sets/ema.svg?1538366400') no-repeat 50% 50%;
 			}
 			
 			#divCheckboxes{

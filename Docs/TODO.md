@@ -1,6 +1,5 @@
 * Fixes
 	* Fix how site looks on mobile & tablets
-	* Fix rarity colours to mask over icons
 
 * Additions
 	* Add deley on API requests so Scryfall doesn't hate me

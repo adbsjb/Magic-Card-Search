@@ -439,10 +439,10 @@ function reprints(reprint){
 			a.setAttribute("class", "dropdownItem");
 			a.classList.add(i);
 			$('#setDropdown')[0].appendChild(a)
-			var b = document.createElement("IMG");
+			var b = document.createElement("DIV");
 			b.setAttribute("id", i + "reprintImage");
 			b.classList.add("dropdownImage");
-			b.classList.add("svg");
+			b.classList.add("common");
 			a.appendChild(b);	
 			getSetIcon(reprint.data[i], "#" + i + "reprintImage");
 			
@@ -457,7 +457,8 @@ function getSetIcon(cardObject, imageDest){
 	//puts set icon for specified object into specified location
 	for(var i = 0; i < allSets.length; i++){
 		var test = $(imageDest)[0];
-			$(imageDest)[0].src = allSets[i].icon_svg_uri;
+			$(imageDest)[0].setAttribute("style", "-webkit-mask: url(" + allSets[i].icon_svg_uri + ") no-repeat 50% 50%; width:20px; height:20px;")
+			//$(imageDest)[0].src = allSets[i].icon_svg_uri;
 		if(allSets[i].code == cardObject.set){
 			$(imageDest)[0].title = allSets[i].name + " (" + allSets[i].code.toUpperCase() + ")";
 			$(imageDest)[0].alt = allSets[i].code.toUpperCase();
@@ -535,7 +536,7 @@ function populateCard(cardObject){
 	cardMarketDetails(cardObject);
 	getRulings(cardObject);
 	getSetIcon(cardObject, '#setImage');	
-	getRarity(cardObject, '#setImageBox');
+	getRarity(cardObject, '#setImage');
 	currentCardObject = cardObject;		
 	$("#cardWrapper")[0].classList.add("visible");
 	$("#cardWrapper")[0].classList.remove("invisible");
@@ -560,7 +561,7 @@ function loadDoc(){
 			var cardObject = JSON.parse(this.responseText);	
 			$("#setDropdown")[0].innerHTML = "";			
 			
-			if(cardObject.reprint == true){
+			//if(cardObject.reprint == true){
 				var reprintHttp = new XMLHttpRequest();
 				if(input != ""){		
 					reprintHttp.open("GET", cardObject.prints_search_uri, true);
@@ -569,11 +570,14 @@ function loadDoc(){
 					reprintHttp.onreadystatechange = function(){
 						if (this.readyState == 4 && this.status == 200) {
 							var reprint = JSON.parse(this.responseText);
-							reprints(reprint);
+								if(reprint.total_cards != 1){
+									reprints(reprint);
+								}
+							
 						}
 					}
 				}
-			}
+			//}
 			populateCard(cardObject);			
 		}
 		else if(this.status == 404){
@@ -610,12 +614,15 @@ function loadGeneralSearch(){
 			$('#generalSearchResults')[0].innerHTML = "";
 			var cardListObject = JSON.parse(this.responseText).data;	
 			for(var i = 0; i < cardListObject.length; i++){
-				var a = document.createElement("A");
-				a.setAttribute("class", "cardSearch");
-				a.setAttribute("id", i);
-				a.setAttribute("href", "#");
-				a.setAttribute("onClick", "passCard(\"" + cardListObject[i].name + "\")");
-				$('#generalSearchResults')[0].appendChild(a);
+				var a = document.createElement("DIV");
+				a.setAttribute("class", "cardSearchDiv");
+				var b = document.createElement("A");
+				b.setAttribute("class", "cardSearch");
+				b.setAttribute("id", i);
+				b.setAttribute("href", "#");
+				b.setAttribute("onClick", "passCard(\"" + cardListObject[i].name + "\")");
+				a.appendChild(b);
+				$('#generalSearchResults')[0].appendChild(a);				
 				$('#' + i)[0].innerHTML = cardListObject[i].name;
 				
 			}

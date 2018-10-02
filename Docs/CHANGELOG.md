@@ -1,4 +1,12 @@
-# v1.5.3 - Favicon Edition
+# v1.5.4 - Set improvement edition
+Allowed promo and misc sets to be shown when hovered over
+
+* Promo sets now appear in dropdown menu
+* Sets now show rarity colour on the logo 
+
+
+
+# v1.5.3 - Favicon edition
 Added a favicon and fixed some bugs
 
 * Added favicon from https://www.flaticon.com
