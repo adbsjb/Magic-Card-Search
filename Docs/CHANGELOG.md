@@ -37,7 +37,7 @@ Added different sets functionality
 
 
 
-# v1.4.1 - Button edition
+# v1.4.2 - Button edition
 Started to work on new search feature
 
 * Added buttons for new search feature

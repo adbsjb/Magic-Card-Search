@@ -140,7 +140,7 @@
 			}
 			
 			.hwhiteMana{
-				background-image:url("../symbols/hW.svg");
+				background-image:url("../symbols/hw.svg");
 				background-size: 8px;
 				height:15px;
 				width:7.5px;
@@ -148,7 +148,7 @@
 			}
 			
 			.hblueMana{
-				background-image:url("../symbols/hU.svg");
+				background-image:url("../symbols/hu.svg");
 				background-size: 8px;
 				height:15px;
 				width:7.5px;
@@ -156,14 +156,14 @@
 			}
 			
 			.hblackMana{
-				background-image:url("../symbols/hB.svg");
+				background-image:url("../symbols/hb.svg");
 				background-size: 8px;
 				height:15px;
 				width:7.5px;
 				display: inline-block;
 			}
 			.hredMana{
-				background-image:url("../symbols/hR.svg");
+				background-image:url("../symbols/hr.svg");
 				background-size: 8px;
 				height:15px;
 				width:7.5px;
@@ -171,7 +171,7 @@
 			}
 			
 			.hgreenMana{
-				background-image:url("../symbols/hG.svg");
+				background-image:url("../symbols/hg.svg");
 				background-size: 8px;
 				height:15px;
 				width:7.5px;
@@ -179,7 +179,7 @@
 			}
 			
 			.hcolourlessMana{
-				background-image:url("../symbols/hC.svg");
+				background-image:url("../symbols/hc.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -187,7 +187,7 @@
 			}
 			
 			.whiteblueMana{
-				background-image:url("../symbols/WU.svg");
+				background-image:url("../symbols/wu.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -195,7 +195,7 @@
 			}
 			
 			.whiteblackMana{
-				background-image:url("../symbols/WB.svg");
+				background-image:url("../symbols/wb.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -203,7 +203,7 @@
 			}
 			
 			.blueblackMana{
-				background-image:url("../symbols/UB.svg");
+				background-image:url("../symbols/ub.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -211,7 +211,7 @@
 			}
 			
 			.blueredMana{
-				background-image:url("../symbols/UR.svg");
+				background-image:url("../symbols/ur.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -219,7 +219,7 @@
 			}
 			
 			.blackgreenMana{
-				background-image:url("../symbols/BG.svg");
+				background-image:url("../symbols/bg.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -227,7 +227,7 @@
 			}
 			
 			.blackredMana{
-				background-image:url("../symbols/BR.svg");
+				background-image:url("../symbols/br.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -235,7 +235,7 @@
 			}
 			
 			.redgreenMana{
-				background-image:url("../symbols/RG.svg");
+				background-image:url("../symbols/rg.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -243,7 +243,7 @@
 			}
 			
 			.redwhiteMana{
-				background-image:url("../symbols/RW.svg");
+				background-image:url("../symbols/rw.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -251,7 +251,7 @@
 			}
 			
 			.greenwhiteMana{
-				background-image:url("../symbols/GW.svg");
+				background-image:url("../symbols/gw.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -259,7 +259,7 @@
 			}
 			
 			.greenblueMana{
-				background-image:url("../symbols/GU.svg");
+				background-image:url("../symbols/gu.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -267,7 +267,7 @@
 			}
 			
 			.whitepMana{
-				background-image:url("../symbols/WP.svg");
+				background-image:url("../symbols/wp.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -275,7 +275,7 @@
 			}
 			
 			.bluepMana{
-				background-image:url("../symbols/UP.svg");
+				background-image:url("../symbols/up.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -283,7 +283,7 @@
 			}
 			
 			.blackpMana{
-				background-image:url("../symbols/BP.svg");
+				background-image:url("../symbols/bp.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -291,7 +291,7 @@
 			}
 			
 			.redpMana{
-				background-image:url("../symbols/RP.svg");
+				background-image:url("../symbols/rp.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -299,7 +299,7 @@
 			}
 			
 			.greenpMana{
-				background-image:url("../symbols/GP.svg");
+				background-image:url("../symbols/gp.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -602,13 +602,6 @@
 			body{
 				background-color: #ecf0f1;
 				padding: 10px;
-			}
-			
-			#test{
-				background-color:#DCBA69;
-				width:20px;
-				height:20px;
-				-webkit-mask: url('https://img.scryfall.com/sets/ema.svg?1538366400') no-repeat 50% 50%;
 			}
 			
 			#divCheckboxes{
