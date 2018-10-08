@@ -1,11 +1,11 @@
-//variable declerations
+//global variable declerations
 var currentCardObject;
-var userInput = $("#myInput")[0];
 var divs = [];
-var index = 0;
 var allSets;
-autocompleteSetup(userInput);
+var userDeckList = [];
+autocompleteSetup($("#myInput")[0]);
 getSets();
+namedSearch()
 
 function replaceSymbols(newString){
 	//replaces all references to symbols with actual symbols in given string
@@ -224,29 +224,58 @@ $('#checkImage').click(function(event){
 });
 
 function namedSearch(){
-	$('#searchCollapse').collapse('hide');
-	$('#inputForm')[0].classList.add('show');
-	$('#inputForm')[0].classList.remove('hide');
-	$('#generalInputForm')[0].classList.add('hide');
-	$('#generalInputForm')[0].classList.remove('show');
-	$('#namedWrapper')[0].classList.add('show');
-	$('#namedWrapper')[0].classList.remove('hide');	
-	$('#btnNamed')[0].classList.add('active');
-	$('#btnGeneral')[0].classList.remove('active');
+	enableTab(0);
 }
 
 function generalSearch(){
-	$('#searchCollapse').collapse('show');
-	$('#inputForm')[0].classList.add('hide');
-	$('#inputForm')[0].classList.remove('show');	
-	$('#generalInputForm')[0].classList.add('show');
-	$('#generalInputForm')[0].classList.remove('hide');
-	$('#namedWrapper')[0].classList.add('hide');
-	$('#namedWrapper')[0].classList.remove('show');	
-	$('#btnNamed')[0].classList.remove('active');
-	$('#btnGeneral')[0].classList.add('active');
+	enableTab(1);
 }
 
+function deckList(){
+	enableTab(2);
+}
+
+function enableTab(tab){
+	if(tab == 0){
+		$('#namedCollapse').collapse('show');
+		$('#inputForm')[0].classList.remove('hide');
+		$('#namedWrapper')[0].classList.remove('hide');	
+		$('#btnNamed')[0].classList.add('active');
+		disableTab(1);
+		disableTab(2);
+	}
+	else if(tab == 1){
+		$('#searchCollapse').collapse('show');
+		$('#btnGeneral')[0].classList.add('active');
+		disableTab(0);
+		disableTab(2);
+	}
+	else if(tab == 2){
+		$('#deckCollapse').collapse('show');
+		$('#btnList')[0].classList.add('active');
+		disableTab(0);
+		disableTab(1);
+	}
+}
+
+function disableTab(tab){
+	if(tab == 0){
+		$('#namedCollapse').collapse('hide');
+		$('#btnNamed')[0].classList.remove('active');
+		
+	}
+	else if(tab == 1){	
+		$('#searchCollapse').collapse('hide');
+		$('#btnGeneral')[0].classList.remove('active');
+	}
+	else if(tab == 2){
+		$('#btnList')[0].classList.remove('active');
+		$('#deckCollapse').collapse('hide');
+	}
+}
+
+
+var index = 0;
 function autocompleteSetup(input){
 
 	var currentFocus;

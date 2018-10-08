@@ -1,3 +1,12 @@
+# v1.6 - Decklist edition
+Started work on a decklist maker
+
+* Created new tab for decklist
+* Changed how tabs are opened and closed within the code
+* Changed how tabs transision when clicked
+
+
+
 # v1.5.4 - Set improvement edition
 Allowed promo and misc sets to be shown when hovered over
 
