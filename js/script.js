@@ -73,6 +73,7 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{T}/g, '<span class="tapSymbol"></span>');
 	newString = newString.replace(/{Q}/g, '<span class="untapSymbol"></span>');
 	newString = newString.replace(/{CHAOS}/g, '<span class="chaosSymbol"></span>');	
+	newString = newString.replace(/{PW}/g, '<span class="planeswalkerSymbol"></span>');	
 	newString = newString.replace(/\n/g, '<br>');
 	newString = newString.replace(/\.5/g, '½');
 	return newString;

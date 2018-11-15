@@ -28,6 +28,14 @@
 				display: inline-block;
 			}
 			
+			.planeswalkerSymbol{
+				background-image:url("../symbols/PW.svg");
+				background-size: cover;
+				height:20px;
+				width:11px;
+				display: inline-block;
+			}
+			
 			.tapSymbol{
 				background-image:url("../symbols/T.svg");
 				background-size: 15px;
