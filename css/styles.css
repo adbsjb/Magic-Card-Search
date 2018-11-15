@@ -313,7 +313,16 @@
 				width:15px;
 				display: inline-block;
 			}
-						
+				
+			.zeroMana{
+				background-image:url("../symbols/0.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+				
+			}
+				
 			.oneMana{
 				background-image:url("../symbols/1.svg");
 				background-size: 15px;

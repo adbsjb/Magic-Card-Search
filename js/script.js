@@ -38,6 +38,7 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{B\/P}/g, '<span class="blackpMana"></span>');
 	newString = newString.replace(/{R\/P}/g, '<span class="redpMana"></span>');
 	newString = newString.replace(/{G\/P}/g, '<span class="greenpMana"></span>');
+	newString = newString.replace(/\{0\}/g, '<span class="zeroMana"></span>');
 	newString = newString.replace(/\{1\}/g, '<span class="oneMana"></span>');
 	newString = newString.replace(/\{2\}/g, '<span class="twoMana"></span>');
 	newString = newString.replace(/\{2\/B\}/g, '<span class="twobMana"></span>');
