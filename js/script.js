@@ -141,7 +141,7 @@ function clearFields(){
 function cardMarketDetails(cardObject){
 	//get cardmarket link from scryfall
 	if(cardObject.purchase_uris != null){
-		$('#mcm_link')[0].href = cardObject.purchase_uris.magiccardmarket;
+		$('#mcm_link')[0].href = cardObject.purchase_uris.cardmarket;
 		$('#mcm_link')[0].innerHTML = "on Magic Card Market";
 	}
 	
@@ -235,6 +235,7 @@ function generalSearch(){
 
 function deckList(){
 	enableTab(2);
+	refreshDeckList();
 }
 
 function enableTab(tab){
@@ -273,6 +274,13 @@ function disableTab(tab){
 	else if(tab == 2){
 		$('#btnList')[0].classList.remove('active');
 		$('#deckCollapse').collapse('hide');
+	}
+}
+
+
+function refreshDeckList(){
+	for(var i = 0; i > (userDeckList.length - 1); i++){
+		alert(userDeckList[i].name);
 	}
 }
 
@@ -669,4 +677,8 @@ function loadGeneralSearch(){
 			}
 		}
 	}
+}
+
+function addToDeckList(){
+	userDeckList.push(currentCardObject);
 }
