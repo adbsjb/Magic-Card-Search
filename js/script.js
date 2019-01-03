@@ -120,10 +120,6 @@ function clearFields(){
 	$("#flavor_text")[0].innerHTML = "";
 	$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
 	$("#cardWrapper")[0].classList.add("noBorder");	
-  /*$("#lowestPrice")[0].innerHTML = "";
-	$("#lowestPriceEx")[0].innerHTML = "";
-	$("#lowestPriceFoil")[0].innerHTML = "";
-	$("#averagePrice")[0].innerHTML = "";*/
 	$("#rulingsWrapper")[0].classList.remove("visible");
 	$("#rulingsWrapper")[0].classList.add("invisible");
 	$("#mcm_link")[0].innerHTML = "";
@@ -151,50 +147,6 @@ function cardMarketDetails(cardObject){
 	else{
 		$('#averagePrice')[0].innerHTML = "";
 	}
-	
-	//i'm not sure how this API call works. link here: https://www.mkmapi.eu/ws/documentation/API_2.0:Main_Page
-	
-	/*var myHeaders = new Headers();
-	myHeaders.set('appToken', 'NMb8kbp7HOQl92Vw');
-	myHeaders.set('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
-	myHeaders.set('accessToken', '')
-	myHeaders.set('accessSecret', '')*/
-	
-	
-	/*
-	var nonce = Math.floor((Math.random() * 10000000000000) + 1);
-	var baseString = "GET&" + encodeURIComponent("https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1") + "&";
-	var parameterString = "oauth_consumer_key=NMb8kbp7HOQl92Vw&oauth_nonce=" + nonce + "&oauth_signiture_method=HMAC-SHA1&oauth_timestamp=" + Date.now() + "&oauth_token=EegfnGYSkqPAEDvDrsKWQVo1L556njRg&oauth_version=1.0"
-	baseString = baseString + encodeURIComponent(parameterString);
-	var signingKey = encodeURIComponent("EegfnGYSkqPAEDvDrsKWQVo1L556njRg" + "&" + "")
-	
-	
-	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", "https://sandbox.cardmarket.com/ws/v2.0/output.json/products/find?search="+ cardObject.name.replace(" ", "%20") +"&exact=true&idGame=1&idLanguage=1");
-	xhttp.setRequestHeader('appToken', 'NMb8kbp7HOQl92Vw');
-	xhttp.setRequestHeader('appSecret', 'EegfnGYSkqPAEDvDrsKWQVo1L556njRg');
-	xhttp.setRequestHeader('accessToken', '');
-	xhttp.setRequestHeader('accessSecret', '');
-	xhttp.setRequestHeader('timestamp', Date.now());
-	xhttp.setRequestHeader('nonce', '');
-	xhttp.setRequestHeader('Content-Type', 'application/json')
-	xhttp.send();
-	
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var cardMarketObject = JSON.parse(this.responseText);
-			$("#lowestPrice")[0].innerHTML = "Lowest Price: €" + cardMarketObject.priceGuide.LOW;
-			$("#lowestPriceEx")[0].innerHTML = "Lowest Price (Excellent Condition+): €" + cardMarketObject.priceGuide.LOWEX;	//might need to put a "+" at end here. See when api authorized
-			$("#lowestPriceFoil")[0].innerHTML = "Lowest Foil Price: €" + cardMarketObject.priceGuide.LOWFOIL;
-			$("#averagePrice")[0].innerHTML = "Average Price: €" + cardMarketObject.priceGuide.AVG;
-		}
-		else{
-			$("#lowestPrice")[0].innerHTML = "Cardmarket API did not return data";
-			$("#lowestPriceEx")[0].innerHTML = "";
-			$("#lowestPriceFoil")[0].innerHTML = "";
-			$("#averagePrice")[0].innerHTML = "";			
-		}
-	}*/
 }
 
 $("#generalInput").keyup(function(event) {
@@ -276,14 +228,6 @@ function disableTab(tab){
 		$('#deckCollapse').collapse('hide');
 	}
 }
-
-
-function refreshDeckList(){
-	for(var i = 0; i > (userDeckList.length - 1); i++){
-		alert(userDeckList[i].name);
-	}
-}
-
 
 var index = 0;
 function autocompleteSetup(input){
@@ -652,6 +596,7 @@ function loadGeneralSearch(){
 		if (this.readyState == 4 && this.status == 200) {
 			$('#generalSearchResults')[0].innerHTML = "";
 			var cardListObject = JSON.parse(this.responseText).data;	
+
 			for(var i = 0; i < cardListObject.length; i++){
 				var a = document.createElement("DIV");
 				a.setAttribute("class", "cardSearchDiv");
@@ -680,5 +625,66 @@ function loadGeneralSearch(){
 }
 
 function addToDeckList(){
-	userDeckList.push(currentCardObject);
+	var match = false;
+	for(var i = 0; i <= userDeckList.length; i++){
+		if(currentCardObject == userDeckList[i]){
+			match = true;
+			break;
+		}
+	}
+	
+	if(match == true){
+		currentCardObject.cardQuantity = currentCardObject.cardQuantity + parseInt($('#cardQuantity')[0].value);
+	}
+	else{
+		currentCardObject.cardQuantity = parseInt($('#cardQuantity')[0].value);
+		userDeckList.push(currentCardObject);
+	}
+	if (currentCardObject.cardQuantity > 4 && currentCardObject.type_line.includes("Basic Land") != true && currentCardObject.oracle_text.includes("A deck can have any number of cards named") != true){
+		currentCardObject.cardQuantity = 4;
+	}
+	
+}
+
+function refreshDeckList(){
+	$('#deckListResult')[0].innerHTML = null;
+	$('#txtExport')[0].value = "";
+	for(var i = 0; i <= (userDeckList.length - 1); i++){
+			
+		//Creating DIVs
+		//populateList(userDeckList, '#deckListResult', i);
+
+		var a = document.createElement("DIV");
+		a.setAttribute("class", "cardSearchDiv");
+		var b = document.createElement("A");
+		b.setAttribute("class", "cardSearch");
+		b.setAttribute("id", i);
+		b.setAttribute("href", "#");
+		b.setAttribute("onClick", "passCard(\"" + userDeckList[i].name + "\")");
+		a.appendChild(b);
+		$('#deckListResult')[0].appendChild(a);
+		$('#' + i)[0].innerHTML = userDeckList[i].cardQuantity + "x " + userDeckList[i].name;
+			
+		//Creating text box contents
+		$('#txtExport')[0].value += userDeckList[i].cardQuantity + " " + userDeckList[i].name + "\n";
+	}
+}
+
+/*function populateList(list, destinationDivID, i){
+	var a = document.createElement("DIV");
+	a.setAttribute("class", "cardSearchDiv");
+	var b = document.createElement("A");
+	b.setAttribute("class", "cardSearch");
+	b.setAttribute("id", i);
+	b.setAttribute("href", "#");
+	b.setAttribute("onClick", "passCard(\"" + list[i].name + "\")");
+	a.appendChild(b);
+	$(destinationDivID)[0].appendChild(a);
+	$('#' + i)[0].innerHTML = list[i].name;
+}*/
+
+function clearDeckList(){
+	userDeckList = [];
+	refreshDeckList();
+	
 }

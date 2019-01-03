@@ -760,6 +760,18 @@
 			#licences{
 				width: 100%;
 			}
+
+			#btnExport{
+				margin:5px;
+			}
+
+			#txtExport{
+				font-family: "Lucidia Console", Monaco, monospace;
+			}
+
+			#cardQuantity{
+				width: 40px;
+			}
 			
 			/* For Mobile */
 			

@@ -71,6 +71,7 @@
 					<button id="deckListButton" class="btn btn-outline-secondary" type="button" onclick="addToDeckList()" data-toggle="collapse" aria-expanded="false" aria-controls="collapseRulings">
 						Add to decklist
 					</button>
+					<input id="cardQuantity" type="number" name="quantity" min="1" value="1">
 
 					<div class="collapse" id="collapseRulings">
 						<div id="rulings" class="card card-body">
@@ -103,6 +104,11 @@
 			<div id="deckCollapse" class="collapse">
 				<div id="deckListResult" class="card card-body"> 
 				</div>					
+				<button id="btnExport" class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#exportCollapse" aria-expanded="false" aria-controls="exportCollapse">Export deck to txt</button>
+				<button id="btnClearList" class="btn btn-outline-secondary" type="button" onclick="clearDeckList()">Clear Deck List</button>
+				<div id="exportCollapse" class="collapse">
+					<textarea id="txtExport" readonly></textarea>
+				</div>
 			</div>
 		</form>
 		<!-- Decklist end -->

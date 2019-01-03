@@ -1,3 +1,12 @@
+# v1.65 - Actual Decklist edition
+More work on decklist maker
+
+* Allowed adding cards to decklist with support for multiples of one card
+* Added txt decklist export
+* Various symbol fixes
+
+
+
 # v1.6 - Decklist edition
 Started work on a decklist maker
 
