@@ -11,11 +11,13 @@
 		<link rel="shortcut icon" type="image/png" href="symbols/icon.png"/>	<!--Favicon made by Freepik (http://www.freepik.com) from Flaticon (https://www.flaticon.com/) is licensed by CC 3.0 BY (http://creativecommons.org/licenses/by/3.0/)-->
 	</head>
 	<body>
-	<div style="margin-bottom:10px;" class="btn-group" role="group" aria-label="Tabs">
+		<!--Navigation Buttons start-->
+		<div style="margin-bottom:10px;" class="btn-group" role="group" aria-label="Tabs">
 			<button id="btnNamed" type="button" class="btn btn-outline-dark active" onclick="namedSearch()">Named Search</button>
 			<button id="btnGeneral" type="button" class="btn btn-outline-dark" onclick="generalSearch()">General Search</button>
 			<button id="btnList" type="button" class="btn btn-outline-dark" onclick="deckList()">Deck List</button>
 		</div>
+		<!--Navigation Buttons end-->
 
 		<!-- Named Search start -->
 		<div id=namedCollapse class="collapse">
@@ -55,6 +57,7 @@
 				<p id="artist"></p>
 				<p id="pt"></p>
 				</div>
+				<button id="flipButton" style="display: none" class="btn btn-outline-secondary" type="button" onclick="flip()">Flip</button>
 				<div id="scryfallLinkBox">
 					<a id="scryfall_Link" target="_blank"></a>
 				</div>

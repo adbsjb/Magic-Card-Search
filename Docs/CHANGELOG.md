@@ -1,4 +1,14 @@
-# v1.65 - Actual Decklist edition
+# v1.7 - Card layout edition
+Added more card layout options
+
+* Newly supported card layouts types:
+   * Transform
+   * Split
+   * Flip
+
+
+   
+# v1.65 - Actual decklist edition
 More work on decklist maker
 
 * Allowed adding cards to decklist with support for multiples of one card

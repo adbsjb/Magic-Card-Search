@@ -110,7 +110,6 @@ function clearFields(){
 	$("#mana_cost")[0].innerHTML = "";
 	$("#cardImage")[0].src = "";
 	$("#type_line")[0].innerHTML = "";
-	$("#setImage")[0].src = "";
 	$("#setImage")[0].title = "";
 	$("#setImage")[0].alt = "";
 	$("#oracle_text")[0].innerHTML = "";
@@ -132,6 +131,8 @@ function clearFields(){
 	$("#generalSearchResults")[0].innerHTML = "";
 	$("#generalInput")[0].value = "";
 	$("#averagePrice")[0].innerHTML = "";
+	var test = $("#flipButton")[0].classList;
+	$('#flipButton')[0].style = "display:none";	
 }
 
 function cardMarketDetails(cardObject){
@@ -474,58 +475,150 @@ function getRarity(cardObject, imageDest){
 }
 
 function populateCard(cardObject){
-	$("#name")[0].innerHTML = cardObject.name;
-	var manaSymbols = cardObject.mana_cost;
-	$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
-	if($("#checkImage")[0].checked){
-		$("#cardImage")[0].src = cardObject.image_uris.art_crop;
-	}
-	else{
-		$("#cardImage")[0].src = "";
-	}
-	
-	$("#type_line")[0].innerHTML = cardObject.type_line;
-	var oracle = cardObject.oracle_text;
-	if(oracle != null){
-		$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
-	}
-	else{
-		$("#oracle_text")[0].innerHTML = "";			
-	}
-	if(cardObject.flavor_text != null){
-	$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
-	}
-	else{
-	$("#flavor_text")[0].innerHTML = "";
-	}
-	$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
-	$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
-	$("#scryfall_Link")[0].innerHTML = "on Scryfall";
-	var power;
-	var toughness;
-	if(cardObject.power && cardObject.toughness != null){
-		power = replaceSymbols(cardObject.power) + "/";
-		toughness = replaceSymbols(cardObject.toughness);
+	if(cardObject.layout == "transform"){
+		cardObject.card_faces[0].layout = "normal";
+		cardObject.card_faces[1].layout = "normal";
+		
+		if(cardObject.cardFaceToDisplay == 1){
+			populateCard(cardObject.card_faces[1]);
 		}
+		else{
+			populateCard(cardObject.card_faces[0]);
+		}
+		
+		$('#flipButton')[0].style = "";
+		
+	}
+
+	if(cardObject.layout == "flip"){		
+		
+		if(cardObject.cardFaceToDisplay == 1){
+			cardObject.card_faces[1].layout = "normal";
+			cardObject.card_faces[1].image_uris = cardObject.image_uris;
+			populateCard(cardObject.card_faces[1]);
+			$('#cardImage')[0].style = "transform: rotate(180deg)";
+		}
+		else{
+			cardObject.card_faces[0].layout = "normal";
+			cardObject.card_faces[0].image_uris = cardObject.image_uris;
+			populateCard(cardObject.card_faces[0]);
+			$('#cardImage')[0].style = "";
+		}
+		$('#flipButton')[0].style = "";
+		
+	}
+
+	else if(cardObject.layout == "split"){	
+		var separator = "";
+		$("#name")[0].innerHTML = "";
+		$("#mana_cost")[0].innerHTML = "";
+		$("#oracle_text")[0].innerHTML = "";
+		for(var i = 0; i < cardObject.card_faces.length; i++){
+			if(i > 0){
+				separator = " // "
+			}	
+			$("#name")[0].innerHTML = $("#name")[0].innerHTML + separator + cardObject.card_faces[i].name;
+			$("#mana_cost")[0].innerHTML = $("#mana_cost")[0].innerHTML + separator + replaceSymbols(cardObject.card_faces[i].mana_cost);
+			if($("#checkImage")[0].checked){
+				$("#cardImage")[0].src = cardObject.image_uris.art_crop;
+			}
+			else{
+				$("#cardImage")[0].src = "";
+			}
+			$("#oracle_text")[0].innerHTML = $("#oracle_text")[0].innerHTML + "<br>" + separator + "<br>" + replaceSymbols(cardObject.card_faces[i].oracle_text);
+			$("#type_line")[0].innerHTML = cardObject.type_line;
+			if(cardObject.flavor_text != null){
+				$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
+			}
+			else{
+				$("#flavor_text")[0].innerHTML = "";
+			}
+			$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
+			var power;
+			var toughness;
+			if(cardObject.power && cardObject.toughness != null){
+				power = replaceSymbols(cardObject.power) + "/";
+				toughness = replaceSymbols(cardObject.toughness);
+				}
+			else{
+				power = "";
+				toughness = "";
+			}
+			$("#pt")[0].innerHTML = power + toughness;			
+			$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+
+			$('#flipButton')[0].style = "display:none";	
+		}
+	}
+
+	else if(cardObject.layout == "normal" || cardObject.layout == "leveler" || cardObject.layout == "token" || cardObject.layout == "Saga" || cardObject.layout == "planar" || cardObject.layout == "emblem" || cardObject.layout == "augment" || cardObject.layout == "host" || cardObject.layout == "vanguard" || cardObject.layout == "scheme" || cardObject.layout == "double_faced_token" || cardObject.layout == "meld"){
+		$("#name")[0].innerHTML = cardObject.name;
+		var manaSymbols = cardObject.mana_cost;
+		$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
+		if($("#checkImage")[0].checked){
+			$("#cardImage")[0].src = cardObject.image_uris.art_crop;
+		}
+		else{
+			$("#cardImage")[0].src = "";
+		}
+		
+		$("#type_line")[0].innerHTML = cardObject.type_line;
+		var oracle = cardObject.oracle_text;
+		if(oracle != null){
+			$("#oracle_text")[0].innerHTML = replaceSymbols(oracle);
+		}
+		else{
+			$("#oracle_text")[0].innerHTML = "";			
+		}
+		if(cardObject.flavor_text != null){
+		$("#flavor_text")[0].innerHTML = replaceSymbols(cardObject.flavor_text);
+		}
+		else{
+		$("#flavor_text")[0].innerHTML = "";
+		}
+		$("#artist")[0].innerHTML = "Artist: " + cardObject.artist;
+		var power;
+		var toughness;
+		if(cardObject.power && cardObject.toughness != null){
+			power = replaceSymbols(cardObject.power) + "/";
+			toughness = replaceSymbols(cardObject.toughness);
+			}
+		else{
+			power = "";
+			toughness = "";
+		}
+		$("#pt")[0].innerHTML = power + toughness;			
+		$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+
+		$('#flipButton')[0].style = "display:none";	
+	}
+
 	else{
-		power = "";
-		toughness = "";
+		$('#name')[0].innerHTML = "Card type not yet supported"
+		currentCardObject = cardObject;
+		$("#cardWrapper")[0].classList.add("visible");
+		$("#cardWrapper")[0].classList.remove("invisible");
+		return;
 	}
-	$("#pt")[0].innerHTML = power + toughness;			
-	$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
-	if($("#checkBorder")[0].checked == true){
-		$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
-	}
+
+	$("#cardWrapper")[0].classList.add("visible");
+	$("#cardWrapper")[0].classList.remove("invisible");
 	cardMarketDetails(cardObject);
 	getRulings(cardObject);
 	getSetIcon(cardObject, '#setImage');	
 	getRarity(cardObject, '#setImage');
-	currentCardObject = cardObject;		
-	$("#cardWrapper")[0].classList.add("visible");
-	$("#cardWrapper")[0].classList.remove("invisible");
+	$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
+	$("#scryfall_Link")[0].innerHTML = "on Scryfall";
+	if($("#checkBorder")[0].checked == true){
+		$("#cardWrapper")[0].classList.add(cardObject.border_color + "Border");
+	}
+	else{
+		$("#cardWrapper")[0].classList.remove($("#cardWrapper")[0].classList.item(0));
+	}
+	currentCardObject = cardObject;
 }
 
-function loadDoc(){	
+function loadDoc(){
 	//Use API to get card object
 	var xhttp = new XMLHttpRequest();
 	var input = $("#myInput")[0].value;
@@ -541,36 +634,45 @@ function loadDoc(){
 		
 		//if API returned an object, populate all fields
 		if (this.readyState == 4 && this.status == 200) {
-			var cardObject = JSON.parse(this.responseText);	
-			$("#setDropdown")[0].innerHTML = "";			
-			
-			//if(cardObject.reprint == true){
-				var reprintHttp = new XMLHttpRequest();
-				if(input != ""){		
-					reprintHttp.open("GET", cardObject.prints_search_uri, true);
-					reprintHttp.send();
-					
-					reprintHttp.onreadystatechange = function(){
-						if (this.readyState == 4 && this.status == 200) {
-							var reprint = JSON.parse(this.responseText);
-								if(reprint.total_cards != 1){
-									reprints(reprint);
-								}
-							
+			var cardObject = JSON.parse(this.responseText);
+			$("#setDropdown")[0].innerHTML = "";
+
+			var reprintHttp = new XMLHttpRequest();
+			if(input != ""){
+				reprintHttp.open("GET", cardObject.prints_search_uri, true);
+				reprintHttp.send();
+				
+				reprintHttp.onreadystatechange = function(){
+					if (this.readyState == 4 && this.status == 200) {
+						var reprint = JSON.parse(this.responseText);
+						if(reprint.total_cards != 1){
+							reprints(reprint);
 						}
+						
 					}
 				}
-			//}
+			}
 			populateCard(cardObject);			
 		}
 		else if(this.status == 404){
 		//if no result found, print error
 			clearFields();
+
 			$("#name")[0].innerHTML = "Search not specific enough or card doesn't exist.";
 		}
 		
 	};			
 	
+}
+
+function flip(){
+	if($('#name')[0].innerHTML == currentCardObject.card_faces[0].name){
+		currentCardObject.cardFaceToDisplay = 1;
+	}
+	else{
+		currentCardObject.cardFaceToDisplay = 0;
+	}
+	populateCard(currentCardObject);
 }
 
 function passCard(cardName){
@@ -652,8 +754,6 @@ function refreshDeckList(){
 	for(var i = 0; i <= (userDeckList.length - 1); i++){
 			
 		//Creating DIVs
-		//populateList(userDeckList, '#deckListResult', i);
-
 		var a = document.createElement("DIV");
 		a.setAttribute("class", "cardSearchDiv");
 		var b = document.createElement("A");
@@ -669,19 +769,6 @@ function refreshDeckList(){
 		$('#txtExport')[0].value += userDeckList[i].cardQuantity + " " + userDeckList[i].name + "\n";
 	}
 }
-
-/*function populateList(list, destinationDivID, i){
-	var a = document.createElement("DIV");
-	a.setAttribute("class", "cardSearchDiv");
-	var b = document.createElement("A");
-	b.setAttribute("class", "cardSearch");
-	b.setAttribute("id", i);
-	b.setAttribute("href", "#");
-	b.setAttribute("onClick", "passCard(\"" + list[i].name + "\")");
-	a.appendChild(b);
-	$(destinationDivID)[0].appendChild(a);
-	$('#' + i)[0].innerHTML = list[i].name;
-}*/
 
 function clearDeckList(){
 	userDeckList = [];
