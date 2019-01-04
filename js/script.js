@@ -490,7 +490,7 @@ function populateCard(cardObject){
 		
 	}
 
-	if(cardObject.layout == "flip"){		
+	else if(cardObject.layout == "flip"){		
 		
 		if(cardObject.cardFaceToDisplay == 1){
 			cardObject.card_faces[1].layout = "normal";
