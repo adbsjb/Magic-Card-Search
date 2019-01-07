@@ -583,6 +583,10 @@ function populateCard(cardObject){
 			power = replaceSymbols(cardObject.power) + "/";
 			toughness = replaceSymbols(cardObject.toughness);
 			}
+		else if(cardObject.type_line.includes("Planeswalker")){
+			power = replaceSymbols(cardObject.loyalty);
+			toughness = "";
+		}
 		else{
 			power = "";
 			toughness = "";
