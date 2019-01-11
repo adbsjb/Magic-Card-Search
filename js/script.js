@@ -77,6 +77,7 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{PW}/g, '<span class="planeswalkerSymbol"></span>');	
 	newString = newString.replace(/\n/g, '<br>');
 	newString = newString.replace(/\.5/g, '½');
+
 	return newString;
 }
 
@@ -551,7 +552,7 @@ function populateCard(cardObject){
 		}
 	}
 
-	else if(cardObject.layout == "normal" || cardObject.layout == "leveler" || cardObject.layout == "token" || cardObject.layout == "Saga" || cardObject.layout == "planar" || cardObject.layout == "emblem" || cardObject.layout == "augment" || cardObject.layout == "host" || cardObject.layout == "vanguard" || cardObject.layout == "scheme" || cardObject.layout == "double_faced_token" || cardObject.layout == "meld"){
+	else if(cardObject.layout == "normal" || cardObject.layout == "leveler" || cardObject.layout == "token" || cardObject.layout == "saga" || cardObject.layout == "planar" || cardObject.layout == "emblem" || cardObject.layout == "augment" || cardObject.layout == "host" || cardObject.layout == "vanguard" || cardObject.layout == "scheme" || cardObject.layout == "double_faced_token" || cardObject.layout == "meld"){
 		$("#name")[0].innerHTML = cardObject.name;
 		var manaSymbols = cardObject.mana_cost;
 		$("#mana_cost")[0].innerHTML = replaceSymbols(manaSymbols);
@@ -602,6 +603,8 @@ function populateCard(cardObject){
 		currentCardObject = cardObject;
 		$("#cardWrapper")[0].classList.add("visible");
 		$("#cardWrapper")[0].classList.remove("invisible");
+		$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
+		$("#scryfall_Link")[0].innerHTML = "on Scryfall";
 		return;
 	}
 
@@ -625,9 +628,9 @@ function populateCard(cardObject){
 function loadDoc(){
 	//Use API to get card object
 	var xhttp = new XMLHttpRequest();
-	var input = $("#myInput")[0].value;
+	var input = encodeURIComponent($("#myInput")[0].value);
 	if(input != "" && input != null){	
-		xhttp.open("GET", "https://api.scryfall.com/cards/named?fuzzy=" + input, true);
+		xhttp.open("GET", 'https://api.scryfall.com/cards/named?fuzzy=' + input, true);
 		xhttp.send();
 	}
 	else{
@@ -687,7 +690,7 @@ function passCard(cardName){
 
 function loadGeneralSearch(){
 	var xhttp = new XMLHttpRequest();
-	var input = $("#generalInput")[0].value;
+	var input = encodeURIComponent($("#generalInput")[0].value);
 	if(input != "" && input != null){
 		xhttp.open("GET", "https://api.scryfall.com/cards/search?q=" + input, true);
 		xhttp.send();
@@ -710,7 +713,7 @@ function loadGeneralSearch(){
 				b.setAttribute("class", "cardSearch");
 				b.setAttribute("id", i);
 				b.setAttribute("href", "#");
-				b.setAttribute("onClick", "passCard(\"" + cardListObject[i].name + "\")");
+				b.setAttribute("onClick", "passCard(\"" + replaceSymbols(cardListObject[i].name) + "\")");
 				a.appendChild(b);
 				$('#generalSearchResults')[0].appendChild(a);				
 				$('#' + i)[0].innerHTML = cardListObject[i].name;
