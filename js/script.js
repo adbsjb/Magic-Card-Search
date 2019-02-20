@@ -123,6 +123,8 @@ function clearFields(){
 	$("#rulingsWrapper")[0].classList.remove("visible");
 	$("#rulingsWrapper")[0].classList.add("invisible");
 	$("#mcm_link")[0].innerHTML = "";
+	$("#edhRec_link")[0].innerHTML = "";
+	$("#edhRec_rank")[0].innerHTML = "";
 	$("#setDropdown")[0].innerHTML = "";
 	$("#myInput")[0].value = "";
 	$("#cardWrapper")[0].classList.add("invisible");
@@ -148,6 +150,21 @@ function cardMarketDetails(cardObject){
 	}
 	else{
 		$('#averagePrice')[0].innerHTML = "";
+	}
+}
+
+function edhRecDetails(cardObject){
+	//get edhRec details from scryfall
+	if(cardObject.related_uris.edhrec != null){
+		$('#edhRec_link')[0].href = cardObject.related_uris.edhrec;
+		$('#edhRec_link')[0].innerHTML = "on EDHRec";
+	}
+
+	if(cardObject.edhrec_rank != null){
+		$('#edhRec_rank')[0].innerHTML = "EDHRec Rank: " + cardObject.edhrec_rank;
+	}
+	else{
+		$('#edhRec_rank')[0].innerHTML = "EDHRec Rank: Unknown";
 	}
 }
 
@@ -611,6 +628,7 @@ function populateCard(cardObject){
 	$("#cardWrapper")[0].classList.add("visible");
 	$("#cardWrapper")[0].classList.remove("invisible");
 	cardMarketDetails(cardObject);
+	edhRecDetails(cardObject);
 	getRulings(cardObject);
 	getSetIcon(cardObject, '#setImage');	
 	getRarity(cardObject, '#setImage');
