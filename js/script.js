@@ -711,12 +711,12 @@ function loadGeneralSearch(){
 				a.setAttribute("class", "cardSearchDiv");
 				var b = document.createElement("A");
 				b.setAttribute("class", "cardSearch");
-				b.setAttribute("id", i);
+				b.setAttribute("id", "cardSearch" + i);
 				b.setAttribute("href", "#");
 				b.setAttribute("onClick", "passCard(\"" + replaceSymbols(cardListObject[i].name) + "\")");
 				a.appendChild(b);
 				$('#generalSearchResults')[0].appendChild(a);				
-				$('#' + i)[0].innerHTML = cardListObject[i].name;
+				$('#' + "cardSearch" + i)[0].innerHTML = cardListObject[i].name;
 				
 			}
 		}
@@ -762,15 +762,15 @@ function refreshDeckList(){
 			
 		//Creating DIVs
 		var a = document.createElement("DIV");
-		a.setAttribute("class", "cardSearchDiv");
+		a.setAttribute("class", "decklistDiv");
 		var b = document.createElement("A");
-		b.setAttribute("class", "cardSearch");
-		b.setAttribute("id", i);
+		b.setAttribute("class", "decklist");
+		b.setAttribute("id", "deckList" + i);
 		b.setAttribute("href", "#");
 		b.setAttribute("onClick", "passCard(\"" + userDeckList[i].name + "\")");
 		a.appendChild(b);
 		$('#deckListResult')[0].appendChild(a);
-		$('#' + i)[0].innerHTML = userDeckList[i].cardQuantity + "x " + userDeckList[i].name;
+		$('#' + "deckList" + i)[0].innerHTML = userDeckList[i].cardQuantity + "x " + userDeckList[i].name;
 			
 		//Creating text box contents
 		$('#txtExport')[0].value += userDeckList[i].cardQuantity + " " + userDeckList[i].name + "\n";
