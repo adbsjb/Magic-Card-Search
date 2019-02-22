@@ -155,7 +155,7 @@ function cardMarketDetails(cardObject){
 
 function edhRecDetails(cardObject){
 	//get edhRec details from scryfall
-	if(cardObject.related_uris.edhrec != null){
+	if(cardObject.related_uris != null){
 		$('#edhRec_link')[0].href = cardObject.related_uris.edhrec;
 		$('#edhRec_link')[0].innerHTML = "on EDHRec";
 	}
