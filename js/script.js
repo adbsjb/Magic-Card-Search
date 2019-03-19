@@ -444,7 +444,8 @@ function reprints(reprint){
 			var b = document.createElement("DIV");
 			b.setAttribute("id", i + "reprintImage");
 			b.classList.add("dropdownImage");
-			b.classList.add("common");
+			getRarity(reprint.data[i], b);
+			getSpecialCards(a, reprint.data[i]);
 			a.appendChild(b);	
 			getSetIcon(reprint.data[i], "#" + i + "reprintImage");
 			
@@ -457,36 +458,47 @@ function reprints(reprint){
 
 function getSetIcon(cardObject, imageDest){
 	//puts set icon for specified object into specified location
+	var setObject = getSetObject(cardObject);
+	$(imageDest)[0].title = setObject.name + " (" + setObject.code.toUpperCase() + ")";
+	$(imageDest)[0].alt = setObject.code.toUpperCase();
+	$(imageDest)[0].setAttribute("style", "-webkit-mask: url(" + setObject.icon_svg_uri + ") no-repeat 50% 50%; width:20px; height:20px;")
+		
+	
+}
+
+function getSetObject(cardObject){
 	for(var i = 0; i < allSets.length; i++){
-		var test = $(imageDest)[0];
-			$(imageDest)[0].setAttribute("style", "-webkit-mask: url(" + allSets[i].icon_svg_uri + ") no-repeat 50% 50%; width:20px; height:20px;")
-			//$(imageDest)[0].src = allSets[i].icon_svg_uri;
 		if(allSets[i].code == cardObject.set){
-			$(imageDest)[0].title = allSets[i].name + " (" + allSets[i].code.toUpperCase() + ")";
-			$(imageDest)[0].alt = allSets[i].code.toUpperCase();
-			break;
+			return allSets[i];;
 		}
+	}
+	
+}
+
+function getSpecialCards(cardWrapper, cardObject){
+	cardWrapper.classList.remove('masterpiece', 'digital');
+	if(getSetObject(cardObject).set_type == "masterpiece"){
+		cardWrapper.classList.add("masterpiece");
+	}
+	if(cardObject.digital == true){
+		cardWrapper.classList.add("digital");
 	}
 }
 
+
 function getRarity(cardObject, imageDest){
+	$(imageDest)[0].classList.remove('uncommon', 'rare', 'mythic', 'common');
 	if(cardObject.rarity == 'uncommon'){
-		$(imageDest)[0].setAttribute('class', 'uncommon');
+		$(imageDest)[0].classList.add('uncommon');
 	}
 	else if(cardObject.rarity == 'rare'){
-		$(imageDest)[0].setAttribute('class', 'rare');
+		$(imageDest)[0].classList.add('rare');
 	}
 	else if(cardObject.rarity == 'mythic'){
-		$(imageDest)[0].setAttribute('class', 'mythic');
-	}
-	else if(cardObject.rarity == 'timeshifted'){
-		$(imageDest)[0].setAttribute('class', 'timeshifted');
-	}
-	else if(cardObject.rarity == 'masterpiece'){
-		$(imageDest)[0].setAttribute('class', 'masterpiece');
+		$(imageDest)[0].classList.add('mythic');
 	}
 	else{
-		$(imageDest)[0].setAttribute('class', 'common');
+		$(imageDest)[0].classList.add('common');
 	}
 	
 	

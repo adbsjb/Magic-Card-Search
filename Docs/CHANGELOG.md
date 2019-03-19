@@ -1,3 +1,12 @@
+# v.1.8 - General improvements edition
+Some small improvements
+
+* Set rarity is now shown in the set dropdown menu
+* More easily displayed if a card is digital only
+* More easily displayed if a card is a [masterpiece](https://scryfall.com/search?as=&q=is%3Amasterpiece)
+
+
+
 # v1.7 - Card layout edition
 Added more card layout options
 
