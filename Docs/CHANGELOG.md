@@ -91,7 +91,7 @@ Bug fixes
 
 
 # v1.4 - Frustrating edition
-Added CardMarket link and varios other fixes
+Added CardMarket link and various other fixes
 
 * Got frustrated at the complicated CardMarket API and just used a link to it in the end. I might look into it later on
 * Added half mana symbols

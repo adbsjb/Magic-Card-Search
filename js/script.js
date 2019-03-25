@@ -459,10 +459,11 @@ function reprints(reprint){
 function getSetIcon(cardObject, imageDest){
 	//puts set icon for specified object into specified location
 	var setObject = getSetObject(cardObject);
-	$(imageDest)[0].title = setObject.name + " (" + setObject.code.toUpperCase() + ")";
-	$(imageDest)[0].alt = setObject.code.toUpperCase();
-	$(imageDest)[0].setAttribute("style", "-webkit-mask: url(" + setObject.icon_svg_uri + ") no-repeat 50% 50%; width:20px; height:20px;")
-		
+	if(setObject != null){
+		$(imageDest)[0].title = setObject.name + " (" + setObject.code.toUpperCase() + ")";
+		$(imageDest)[0].alt = setObject.code.toUpperCase();
+		$(imageDest)[0].setAttribute("style", "-webkit-mask: url(" + setObject.icon_svg_uri + ") no-repeat 50% 50%; width:20px; height:20px;")
+	}
 	
 }
 
