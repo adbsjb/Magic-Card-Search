@@ -715,6 +715,7 @@ function flip(){
 }
 
 function passCard(cardName){
+	cardName = cardName.replace(/&#039/g, "\'");
 	$("#myInput")[0].value = cardName;
 	$("#btnNamed").click();
 	$("#btnRequestData").click();
