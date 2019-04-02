@@ -744,7 +744,7 @@ function loadGeneralSearch(){
 				b.setAttribute("class", "cardSearch");
 				b.setAttribute("id", "cardSearch" + i);
 				b.setAttribute("href", "#");
-				b.setAttribute("onClick", "passCard(\"" + replaceSymbols(cardListObject[i].name) + "\")");
+				b.setAttribute("onClick", "passCard(\'" + replaceSymbols(cardListObject[i].name) + "\')");
 				a.appendChild(b);
 				$('#generalSearchResults')[0].appendChild(a);				
 				$('#' + "cardSearch" + i)[0].innerHTML = cardListObject[i].name;
