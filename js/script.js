@@ -77,6 +77,7 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{PW}/g, '<span class="planeswalkerSymbol"></span>');	
 	newString = newString.replace(/\n/g, '<br>');
 	newString = newString.replace(/\.5/g, '½');
+	newString = newString.replace(/\'/g, "&#039");
 
 	return newString;
 }
@@ -744,7 +745,7 @@ function loadGeneralSearch(){
 				b.setAttribute("class", "cardSearch");
 				b.setAttribute("id", "cardSearch" + i);
 				b.setAttribute("href", "#");
-				b.setAttribute("onClick", "passCard(\'" + replaceSymbols(cardListObject[i].name) + "\')");
+				b.setAttribute("onClick", "passCard('" + replaceSymbols(cardListObject[i].name) + "')");
 				a.appendChild(b);
 				$('#generalSearchResults')[0].appendChild(a);				
 				$('#' + "cardSearch" + i)[0].innerHTML = cardListObject[i].name;

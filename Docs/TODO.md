@@ -1,6 +1,5 @@
 * Fixes
-	* Add delay on API requests so Scryfall doesn't hate me
-	* Fix double quote marks breaking out of strings. Maybe put this in `replaceSymbols()` function: `newString = newString.replace(/\"/g, '\\"');` Although this broke much more than it fixed when I tried. Also may have to wait until spoiler season to test as scryfall doesn't really use double quotes often.
+	* Add delay on API requests so Scryfall doesn't hate me (although I doubt they even notice me OwO)
 
 
 * Additions
