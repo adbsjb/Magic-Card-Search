@@ -436,7 +436,7 @@ function reprints(reprint){
 	//creates the dropdown menu with images
 	$("#setDropdown")[0].innerHTML = "";
 	for(var i = 0; i < reprint.data.length; i++){
-		if(reprint.data[i].lang == "en"){
+		if(reprint.data[i].lang == "en" || reprint.data[i].lang == "ja"){
 			var a = document.createElement("DIV");
 			a.setAttribute("id", i + "reprintDiv");
 			a.setAttribute("class", "dropdownItem");
@@ -461,7 +461,11 @@ function getSetIcon(cardObject, imageDest){
 	//puts set icon for specified object into specified location
 	var setObject = getSetObject(cardObject);
 	if(setObject != null){
-		$(imageDest)[0].title = setObject.name + " (" + setObject.code.toUpperCase() + ")";
+		var lang = "";
+		if(cardObject.lang != "en"){
+			lang = "[" + cardObject.lang.toUpperCase() + "]";
+		}
+		$(imageDest)[0].title = setObject.name + " (" + setObject.code.toUpperCase() + ") " + lang;
 		$(imageDest)[0].alt = setObject.code.toUpperCase();
 		$(imageDest)[0].setAttribute("style", "-webkit-mask: url(" + setObject.icon_svg_uri + ") no-repeat 50% 50%; width:20px; height:20px;")
 	}
