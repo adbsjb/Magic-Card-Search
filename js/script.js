@@ -146,8 +146,8 @@ function cardMarketDetails(cardObject){
 		$('#mcm_link')[0].innerHTML = "on Magic Card Market";
 	}
 	
-	if(cardObject.eur != null){
-		$('#averagePrice')[0].innerHTML = "Average Price: €" + 	cardObject.eur;			
+	if(cardObject.prices.eur != null){
+		$('#averagePrice')[0].innerHTML = "Average Price: €" + 	cardObject.prices.eur;			
 	}
 	else{
 		$('#averagePrice')[0].innerHTML = "";
