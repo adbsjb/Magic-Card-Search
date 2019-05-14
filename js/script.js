@@ -146,7 +146,7 @@ function cardMarketDetails(cardObject){
 		$('#mcm_link')[0].innerHTML = "on Magic Card Market";
 	}
 	
-	if(cardObject.prices.eur != null){
+	if(cardObject.prices != null){
 		$('#averagePrice')[0].innerHTML = "Average Price: €" + 	cardObject.prices.eur;			
 	}
 	else{
@@ -521,6 +521,14 @@ function populateCard(cardObject){
 		else{
 			populateCard(cardObject.card_faces[0]);
 		}
+
+		cardMarketDetails(cardObject);
+		edhRecDetails(cardObject);
+		getRulings(cardObject);
+		getSetIcon(cardObject, '#setImage');	
+		getRarity(cardObject, '#setImage');
+		$("#scryfall_Link")[0].href = cardObject.scryfall_uri;
+		$("#scryfall_Link")[0].innerHTML = "on Scryfall";
 		
 		$('#flipButton')[0].style = "";
 		
