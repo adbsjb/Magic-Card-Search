@@ -53,7 +53,7 @@
 			}
 			
 			.xMana{
-				background-image:url("../symbols/X.svg");
+				background-image:url("../symbols/Xmana.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -61,7 +61,7 @@
 			}
 			
 			.yMana{
-				background-image:url("../symbols/Y.svg");
+				background-image:url("../symbols/Ymana.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
@@ -69,7 +69,7 @@
 			}
 			
 			.zMana{
-				background-image:url("../symbols/Z.svg");
+				background-image:url("../symbols/Zmana.svg");
 				background-size: 15px;
 				height:15px;
 				width:15px;
