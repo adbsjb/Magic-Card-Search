@@ -146,6 +146,15 @@
 				width:15px;
 				display: inline-block;
 			}
+
+			.acornCounter{
+				background-image:url("../symbols/A.svg");
+				background-size: 15px;
+				height:15px;
+				width:15px;
+				display: inline-block;
+			}
+
 			
 			.hwhiteMana{
 				background-image:url("../symbols/hw.svg");
