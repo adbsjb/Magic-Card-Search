@@ -17,6 +17,7 @@ function replaceSymbols(newString){
 	newString = newString.replace(/{S}/g, '<span class="snowMana"></span>');
 	newString = newString.replace(/{E}/g, '<span class="energy"></span>');
 	newString = newString.replace(/{C}/g, '<span class="colourlessMana"></span>');
+	newString = newString.replace(/{A}/g, '<span class="acornCounter"></span>');
 	newString = newString.replace(/{HW}/g, '<span class="hwhiteMana"></span>');
 	newString = newString.replace(/{HU}/g, '<span class="hblueMana"></span>');
 	newString = newString.replace(/{HB}/g, '<span class="hblackMana"></span>');
