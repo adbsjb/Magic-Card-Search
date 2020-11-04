@@ -79,6 +79,8 @@ function replaceSymbols(newString){
 	newString = newString.replace(/\n/g, '<br>');
 	newString = newString.replace(/\.5/g, '½');
 	newString = newString.replace(/\'/g, "&#039");
+	newString = newString.replace(/\(/g, "<i>(")
+	newString = newString.replace(/\)/g, ")</i>")
 
 	return newString;
 }
