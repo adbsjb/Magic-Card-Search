@@ -1,3 +1,7 @@
+# v1.9 - Modal DFC edition
+Added support for [modal DFCs](https://magic.wizards.com/en/articles/archive/feature/zendikar-rising-mechanics-2020-09-01)
+
+
 # v.1.8 - General improvements edition
 Some small improvements
 
