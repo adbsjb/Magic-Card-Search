@@ -514,7 +514,7 @@ function getRarity(cardObject, imageDest){
 }
 
 function populateCard(cardObject){
-	if(cardObject.layout == "transform"){
+	if(cardObject.layout == "transform" || cardObject.layout == "modal_dfc"){
 		cardObject.card_faces[0].layout = "normal";
 		cardObject.card_faces[1].layout = "normal";
 		
@@ -537,7 +537,7 @@ function populateCard(cardObject){
 		
 	}
 
-	else if(cardObject.layout == "flip" || cardObject.layout == "modal_dfc"){		
+	else if(cardObject.layout == "flip"){		
 		
 		if(cardObject.cardFaceToDisplay == 1){
 			cardObject.card_faces[1].layout = "normal";
