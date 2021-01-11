@@ -537,7 +537,7 @@ function populateCard(cardObject){
 		
 	}
 
-	else if(cardObject.layout == "flip" || "modal_dfc"){		
+	else if(cardObject.layout == "flip" || cardObject.layout == "modal_dfc"){		
 		
 		if(cardObject.cardFaceToDisplay == 1){
 			cardObject.card_faces[1].layout = "normal";
